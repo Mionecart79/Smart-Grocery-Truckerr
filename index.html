@@ -318,9 +318,14 @@
           <textarea id="firebaseConfigInput" class="form-input" style="height: 90px; font-family: var(--font-mono); font-size: 10px; padding: 8px;" placeholder='{ "apiKey": "AIzaSy...", "projectId": "proyek-kamu" }'></textarea>
         </div>
 
-        <button type="button" class="btn-chip btn-chip-primary" onclick="saveFirebaseConfigFromInput()">
-          Hubungkan Firebase Cloud
-        </button>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="btn-chip btn-chip-primary" onclick="manualSyncToFirebase()">
+            ⚡ Sinkronkan ke Firebase Sekarang
+          </button>
+          <button type="button" class="btn-chip" onclick="saveFirebaseConfigFromInput()">
+            Simpan Konfigurasi
+          </button>
+        </div>
       </div>
 
       <!-- About App -->

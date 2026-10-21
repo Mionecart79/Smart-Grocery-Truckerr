@@ -1177,6 +1177,16 @@ function syncToFirebaseCloud() {
   }
 }
 
+function manualSyncToFirebase() {
+  if (typeof window !== 'undefined' && window.syncCartToFirestore) {
+    window.syncCartToFirestore(appState.items, appState.budgetLimit, appState.userProfile.name);
+    showToast('⚡ Data keranjang disinkronkan ke Cloud Firebase!');
+  } else {
+    showToast('Firebase belum terhubung. Periksa konfigurasi.');
+  }
+}
+
+
 
 // ==========================================================
 // 10. UI UTILITIES, TABS, TOAST & INITIALIZATION
