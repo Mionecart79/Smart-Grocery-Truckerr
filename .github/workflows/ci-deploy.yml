@@ -1,0 +1,68 @@
+name: Smart Grocery Tracker - CI & Pages Deployment
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  test:
+    name: Run Automated Tests (P12 & DT2 Compliance)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run Test Suite (Diskon Bertingkat, Reaktivitas, Komparator, Safety Cap)
+        run: node test_app_logic.js
+
+      - name: Verify PWA Files Integrity
+        run: |
+          test -f index.html || (echo "index.html missing" && exit 1)
+          test -f manifest.json || (echo "manifest.json missing" && exit 1)
+          test -f sw.js || (echo "sw.js missing" && exit 1)
+          test -f js/app.js || (echo "js/app.js missing" && exit 1)
+          test -f css/styles.css || (echo "css/styles.css missing" && exit 1)
+          echo "All essential PWA files are verified successfully!"
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
