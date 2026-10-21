@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P15. Daily Test 2 (DT2) - Evaluasi Smart Grocery Tracker</title>
+  <style>
+@page { margin: 2.5cm 2cm; size: A4; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1e293b; line-height: 1.55; font-size: 12px; background: #f4f6f9; }
+    .page { max-width: 720px; margin: 0 auto; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.06); padding: 0 2cm; }
+
+    /* COVER STYLING SSOT */
+    .cover { page-break-after: always; text-align: center; padding-top: 2.5cm; }
+    .cover img { width: 130px; margin-bottom: 1.2cm; }
+    .pertemuan-num { text-align: center; font-size: 26pt !important; font-weight: 300; color: #14b8a6; margin-bottom: 1cm; text-transform: uppercase; letter-spacing: 3px; }
+    h1 { font-size: 16pt; font-weight: 500; text-align: center; margin-top: 1.5cm; margin-bottom: .4cm; color: #0f766e; letter-spacing: -.3px; }
+    .subtitle { text-align: center; font-size: 10pt !important; color: #64748b; margin-bottom: 1.2cm; font-weight: 400; }
+    .cover .line { width: 40px; height: 2px; background: #14b8a6; margin: .6cm auto; }
+    .cover .info { font-size: 10pt; color: #64748b; margin-top: 1.2cm; text-align: center; }
+    .cover .info span { display: block; font-size: 9pt; color: #94a3b8; margin-top: 4px; }
+
+    /* ACADEMIC TYPOGRAPHY SCALING */
+    h2 { font-size: 15px; font-weight: 500; color: #0f766e; margin-top: 1.2cm; margin-bottom: .35cm; padding-bottom: 3px; border-bottom: 1.5px solid #ccfbf1; display: flex; align-items: center; gap: 8px; }
+    h3 { font-size: 13.5px; font-weight: 500; color: #115e59; margin-top: .8cm; margin-bottom: .25cm; }
+    h4 { font-size: 12.5px; font-weight: 500; color: #1e293b; margin-top: .5cm; margin-bottom: .2cm; }
+
+    p { font-size: 12px; margin-bottom: .35cm; text-align: justify; color: #334155; line-height: 1.65; }
+    ul, ol { margin-left: 0.8cm; margin-bottom: .35cm; }
+    li { font-size: 12px !important; margin-bottom: .12cm; color: #334155; line-height: 1.6; text-align: justify; }
+    table { width: 100%; border-collapse: collapse; margin: .4cm 0; font-size: 9pt; border-radius: 6px; overflow: hidden; border: 1px solid #cbd5e1; }
+    th { background: #0f766e; color: #fff; padding: 6px 8px; text-align: left; font-weight: 500; }
+    td { padding: 5px 8px; border-bottom: 1px solid #e2e8f0; color: #334155; vertical-align: top; text-align: justify; font-size: 11px; }
+    tr:nth-child(even) td { background: #f8fafc; }
+
+    /* Highlight Cards & Info Boxes */
+    .info-box { background: #f0fdfa; border-left: 3px solid #14b8a6; padding: 10px 14px; margin: .4cm 0; border-radius: 0 4px 4px 0; font-size: 12px; text-align: justify; }
+    .info-box p { margin-bottom: 0; color: #134e4a; text-align: justify; font-size: 12px; }
+    .tip-box { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 10px 14px; margin: .4cm 0; border-radius: 0 4px 4px 0; font-size: 12px; text-align: justify; }
+    .tip-box p { margin-bottom: 0; color: #78350f; text-align: justify; font-size: 12px; }
+    .warning-box { background: #fef2f2; border-left: 3px solid #ef4444; padding: 10px 14px; margin: .4cm 0; border-radius: 0 4px 4px 0; font-size: 12px; text-align: justify; }
+    .warning-box p { margin-bottom: 0; color: #991b1b; text-align: justify; font-size: 12px; }
+
+    .toc { margin: .6cm 0; padding: .3cm .6cm; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; }
+    .toc h3 { margin-top: 0; color: #0f766e; font-size: 13.5px; border-bottom: 1px solid #cbd5e1; padding-bottom: 6px; }
+    .toc ol { counter-reset: toc; margin-top: 8px; }
+    .toc li { list-style: none; counter-increment: toc; margin-bottom: 4px; color: #475569; font-size: 12px !important; text-align: left; }
+    .toc li:before { content: counter(toc)". "; font-weight: 500; color: #14b8a6; }
+
+    .step-box { text-align: justify; background: #f8fafc; padding: 8px 12px; margin: .3cm 0; border-radius: 6px; border: 1px solid #e2e8f0; border-left: 3px solid #0f766e; }
+    .step-box ol { margin-bottom: 0; margin-left: 0.6cm; }
+    .step-box li { text-align: justify; margin-bottom: 2px; font-size: 12px !important; }
+
+    .deliverable { text-align: justify; background: #f0fdfa; border: 1.5px solid #14b8a6; padding: 12px 16px; margin: .5cm 0; border-radius: 6px; }
+    .deliverable p { text-align: justify; margin: 0; font-weight: 500; color: #0f766e; }
+    .deliverable ul { margin-top: 6px; margin-bottom: 0; }
+    .deliverable li { text-align: justify; color: #0f766e; font-size: 12px !important; }
+
+    .footer { margin-top: 2cm; padding: .4cm 0 .6cm; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: flex-start; font-size: 10px; color: #94a3b8; line-height: 1.5; }
+    .footer-right { text-align: right; color: #94a3b8; }
+
+    /* PANDA THEME VSCODE STYLING */
+    strong, b {
+      font-weight: 500 !important;
+      color: #0f172a !important;
+    }
+    p code, li code, span code, td code {
+      background: transparent !important;
+      color: #0f766e !important;
+      padding: 0 !important;
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
+      font-size: 0.95em !important;
+      font-weight: 500 !important;
+      border-radius: 0 !important;
+      white-space: pre-wrap !important;
+      word-break: break-word !important;
+      display: inline !important;
+    }
+    pre, code, pre code, pre span, pre * {
+      white-space: pre-wrap !important;
+      word-break: break-word !important;
+    }
+    .code-box {
+      background: #242526 !important;
+      border: 1px solid #343638 !important;
+      border-radius: 8px !important;
+      margin: 16px 0 !important;
+      overflow: hidden !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+      text-align: left !important;
+    }
+    .code-header {
+      background: #1e1f20 !important;
+      padding: 8px 14px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      border-bottom: 1px solid #343638 !important;
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 9px !important;
+      color: #8c9296 !important;
+    }
+    .code-title {
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      font-weight: 500 !important;
+      color: #c5c8c6 !important;
+    }
+    .code-lang {
+      text-transform: uppercase !important;
+      font-size: 8px !important;
+      color: #ff9b5e !important;
+      background: rgba(255, 155, 94, 0.1) !important;
+      padding: 2px 6px !important;
+      border-radius: 4px !important;
+      font-weight: 500 !important;
+    }
+    .code-content {
+      padding: 12px 14px !important;
+      overflow-x: auto !important;
+      margin: 0 !important;
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
+      font-size: 9pt !important;
+      line-height: 1.5 !important;
+      color: #e6e6e6 !important;
+      background: #242526 !important;
+    }
+
+    selection { background: transparent !important; color: inherit !important; }
+
+    @media print { body { background: white; } .page { max-width: none; padding: 0; box-shadow: none; } }
+    @media screen and (max-width: 768px) {
+      body { font-size: 12px; background: white; }
+      .page { max-width: 100%; padding: 0 14px; box-shadow: none; }
+      h1 { font-size: 16pt; margin-top: 1cm; }
+      h2 { font-size: 15px; margin-top: .8cm; }
+      h3 { font-size: 13.5px; }
+      .footer { flex-direction: column; gap: 4px; text-align: center; padding-bottom: .6cm; }
+      .footer-left, .footer-right { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="cover">
+      <img src="/pdfs/logo.png" alt="Logo Sekolah Mutiara Bangsa 2" style="width:130px;margin-bottom:1.2cm" />
+      <p class="pertemuan-num">Pertemuan 15</p>
+      <h1 style="margin-top:0.5cm">Daily Test 2 (DT2): Evaluasi Smart Grocery Tracker</h1>
+      <p class="subtitle">Penilaian Sumatif 40% Rapor: Validasi Logika Matematis, Realtime Price Comparator &amp; Budget Safety Cap</p>
+      <div class="line"></div>
+      <div class="info">
+        ICT Codehub Modul
+        <span>Kelas 12 • Academic Year 2026/2027 (Semester 1)</span>
+      </div>
+    </div>
+
+    <div class="toc">
+      <h3>Daftar Isi Pertemuan 15</h3>
+      <ol>
+        <li>Standar Penilaian Sumatif Daily Test 2 (Bobot 40% Rapor)</li>
+        <li>Review Kasus Rian dan Batasan Pengujian Sistem</li>
+        <li>Skenario Uji 1: Penanganan Diskon Bertingkat Kompound</li>
+        <li>Skenario Uji 2: Penggandaan Kuantitas Otomatis Tanpa Delay</li>
+        <li>Skenario Uji 3: Indikator Komparasi Fluktuasi Harga Realtime</li>
+        <li>Skenario Uji 4: Sistem Pengendali Anggaran (Budget Warning)</li>
+        <li>Rubrik Penilaian Objektif DT2 Kelas 12</li>
+        <li>Petunjuk Pengumpulan File Akhir DT2</li>
+      </ol>
+    </div>
+
+    <h2>1. Standar Penilaian Sumatif Daily Test 2 (Bobot 40% Rapor)</h2>
+    <p>
+      Pertemuan 15 adalah sesi pelaksanaan <strong>Daily Test 2 (DT2)</strong> dengan bobot 40% terhadap nilai rapor semester ganjil. 
+      Ujian ini menguji kemampuanmu dalam mengimplementasikan rancangan analisis yang telah disusun pada Pertemuan 12 ~ 14 menjadi sebuah 
+      aplikasi web fungsional yang bebas dari kesalahan logika matematis.
+    </p>
+
+    <div class="info-box">
+      <p>
+        <strong>Kriteria Tuntas DT2:</strong> Sistem web yang kamu buat bersama Antigravity IDE harus mampu melewati 4 skenario uji kasus nyata 
+        belanja supermarket anak kos tanpa crash, menghasilkan nilai kalkulasi yang presisi hingga digit satuan, dan tersimpan ke penyimpanan data lokal/cloud.
+      </p>
+    </div>
+
+    <h2>2. Review Kasus Rian dan Batasan Pengujian Sistem</h2>
+    <p>
+      Aplikasi <em>Smart Grocery &amp; Budget Safety Tracker</em> diuji langsung dengan skenario barang belanjaan bulanan Rian:
+    </p>
+    <ul>
+      <li><strong>Target Pengguna:</strong> Siswa/mahasiswa rantau dengan uang saku belanja bulanan terbatas (contoh: batas dompet Rp 350.000).</li>
+      <li><strong>Alat Kerja:</strong> Antigravity IDE, browser Google Chrome, dan penyimpanan data browser (LocalStorage / Firestore).</li>
+      <li><strong>Metode Pengujian:</strong> Guru atau penguji memasukkan data uji coba acak untuk memverifikasi apakah rumus dan indikator warna bekerja tepat waktu.</li>
+    </ul>
+
+    <h2>3. Skenario Uji 1: Penanganan Diskon Bertingkat Kompound</h2>
+    <p>
+      Toko seringkali menerapkan label diskon bertumpuk seperti <code>50% + 20%</code> atau <code>80% + 20%</code>. 
+      Sistemmu wajib membuktikan bahwa perhitungannya tidak menjumlahkan persentase secara keliru:
+    </p>
+
+    <div class="step-box">
+      <ol>
+        <li><strong>Kasus Diskon Tunggal:</strong> Beli Sabun Rp 20.000 dengan diskon 25% &rarr; Harga akhir wajib menjadi Rp 15.000.</li>
+        <li><strong>Kasus Diskon Bertumpuk:</strong> Beli Wajan Rp 100.000 dengan promo <code>50% + 20%</code>:
+          <br>&bull; Tahap 1: Rp 100.000 dipotong 50% = Rp 50.000.
+          <br>&bull; Tahap 2: Sisa Rp 50.000 dipotong lagi 20% = Rp 40.000.
+          <br>&bull; <em>Peringatan:</em> Sistem yang salah akan menghitung 50% + 20% = 70% (Rp 30.000). Hal ini dianggap tidak lulus uji kasus 1.
+        </li>
+      </ol>
+    </div>
+
+    <h2>4. Skenario Uji 2: Penggandaan Kuantitas Otomatis Tanpa Delay</h2>
+    <p>
+      Ketika Rian mengubah jumlah barang yang dibeli (kuantitas), sistem harus langsung memperbarui subtotal secara instan:
+    </p>
+    <ul>
+      <li>Minyak Goreng 2L seharga Rp 43.000, kuantitas awal = 1. Subtotal = Rp 43.000.</li>
+      <li>Ubah kuantitas menjadi 3. Subtotal wajib otomatis berubah menjadi Rp 129.000 secara realtime tanpa tombol hitung terpisah.</li>
+    </ul>
+
+    <h2>5. Skenario Uji 3: Indikator Komparasi Fluktuasi Harga Realtime</h2>
+    <p>
+      Sistem mendeteksi apakah harga barang saat ini lebih mahal atau lebih murah dibandingkan catatan belanja bulan lalu:
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 25%;">Kondisi Harga</th>
+          <th style="width: 35%;">Simulasi Data</th>
+          <th style="width: 40%;">Tampilan yang Diharapkan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Harga Naik</td>
+          <td>Beras: Bulan lalu Rp 68.000 &rarr; Sekarang Rp 74.000</td>
+          <td>Tampil panah merah naik (&uarr;) dengan teks selisih (+Rp 6.000).</td>
+        </tr>
+        <tr>
+          <td>Harga Turun</td>
+          <td>Telur: Bulan lalu Rp 32.000 &rarr; Sekarang Rp 28.000</td>
+          <td>Tampil panah hijau turun (&darr;) dengan teks hemat (-Rp 4.000).</td>
+        </tr>
+        <tr>
+          <td>Harga Stabil</td>
+          <td>Garam: Bulan lalu Rp 5.000 &rarr; Sekarang Rp 5.000</td>
+          <td>Tampil tanda setara abu-abu (=) harga tetap stabil.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>6. Skenario Uji 4: Sistem Pengendali Anggaran (Budget Warning)</h2>
+    <p>
+      Fitur keselamatan finansial untuk mencegah insiden memalukan di depan kasir:
+    </p>
+    <div class="warning-box">
+      <p>
+        Jika total seluruh belanjaan di keranjang sudah mencapai &ge; 90% dari batas uang dompet, bar status wajib berubah warna menjadi kuning (Peringatan Waspada). 
+        Jika total belanjaan melampaui 100% saldo dompet, seluruh banner atas wajib menyala merah dengan pesan tegas: 
+        <em>"Total belanja melebihi batas uang tunai! Kurangi kuantitas atau tunda pembelian barang sekunder."</em>
+      </p>
+    </div>
+
+    <h2>7. Rubrik Penilaian Objektif DT2 Kelas 12</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 25%;">Komponen Penilaian</th>
+          <th style="width: 15%;">Bobot</th>
+          <th style="width: 60%;">Indikator Keberhasilan (KKTP)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Akurasi Formula Diskon</td>
+          <td>25 Poin</td>
+          <td>Berhasil menangani diskon tunggal dan diskon bertumpuk bertingkat secara tepat tanpa error pembulatan.</td>
+        </tr>
+        <tr>
+          <td>Reaktivitas Kuantitas</td>
+          <td>20 Poin</td>
+          <td>Subtotal dan total tagihan ter-update otomatis saat kuantitas berubah.</td>
+        </tr>
+        <tr>
+          <td>Komparator Fluktuasi Harga</td>
+          <td>25 Poin</td>
+          <td>Indikator panah merah/hijau/setara tampil konsisten sesuai perbandingan harga bulan lalu.</td>
+        </tr>
+        <tr>
+          <td>Pengendali Anggaran (Budget Cap)</td>
+          <td>15 Poin</td>
+          <td>Indikator visual peringatan limit dompet menyala tepat saat batas anggaran terlampaui.</td>
+        </tr>
+        <tr>
+          <td>Penyimpanan &amp; Desain Web</td>
+          <td>15 Poin</td>
+          <td>Data tersimpan aman (tidak hilang saat refresh) dan tampilan nyaman dibuka di layar smartphone.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>8. Petunjuk Pengumpulan Tugas Akhir DT2</h2>
+    <div class="deliverable">
+      <p>Deliverable Terpadu Ujian Daily Test 2 (DT2):</p>
+      <ul>
+        <li><strong>Link Repository GitHub Proyek:</strong> Memuat seluruh file source code aplikasi mobile PWA yang dibangun sejak Pertemuan 12 ~ 14 dan disempurnakan pada evaluasi Pertemuan 15.</li>
+        <li><strong>Link Live URL (Opsional / Nilai Tambah):</strong> Website aktif yang dapat diuji langsung oleh guru melalui link publik GitHub Pages atau Vercel.</li>
+        <li><strong>Dokumen Analisis &amp; Bukti Pengujian:</strong> Dokumen ringkas (PDF) yang memuat tabel checklist kebutuhan SRS dari Pertemuan 12 ~ 14 serta screenshot pembuktian 4 skenario uji di Pertemuan 15.</li>
+        <li><strong>Batas Waktu Pengumpulan:</strong> Hari Minggu pada pekan berjalan pukul 23:59 WIB melalui form pengumpulan tugas di ICTCodehub.</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <div class="footer-left">
+        ICT Codehub &bull; SMA Mutiara Bangsa 2 Tangerang<br>
+        Laboratorium Komputer &bull; Kurikulum Informatika 2026/2027
+      </div>
+      <div class="footer-right">
+        Modul P15: Daily Test 2 (DT2)<br>
+        Halaman 1 dari 1 (Dokumen Penilaian Sumatif)
+      </div>
+    </div>
+  </div>
+</body>
+</html>

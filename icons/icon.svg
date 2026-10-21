@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f766e" />
+      <stop offset="50%" stop-color="#14b8a6" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#0f766e" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#grad)" />
+  <!-- Shopping cart & truck icon -->
+  <g fill="none" stroke="#ffffff" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" transform="translate(64, 76)">
+    <!-- Trolley body -->
+    <path d="M 40 40 L 90 40 L 140 230 L 320 230 L 350 100 L 110 100" />
+    <!-- Wheels -->
+    <circle cx="160" cy="290" r="28" fill="#ffffff" />
+    <circle cx="300" cy="290" r="28" fill="#ffffff" />
+    <!-- Shield / Safety check -->
+    <path d="M 230 70 Q 230 50 250 50 L 310 50 Q 330 50 330 70 L 330 140 Q 280 180 230 140 Z" fill="#ffffff" fill-opacity="0.25" stroke="#ffffff" stroke-width="14" />
+    <!-- Checkmark / price arrow -->
+    <path d="M 260 105 L 275 120 L 305 90" stroke="#ffffff" stroke-width="16" />
+  </g>
+</svg>

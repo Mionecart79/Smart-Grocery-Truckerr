@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P12~P14. Smart Grocery & Price Tracker</title>
+  <style>
+@page { margin: 2.5cm 2cm; size: A4; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1e293b; line-height: 1.55; font-size: 12px; background: #f4f6f9; }
+    .page { max-width: 720px; margin: 0 auto; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.06); padding: 0 2cm; }
+
+    /* COVER STYLING SSOT */
+    .cover { page-break-after: always; text-align: center; padding-top: 2.5cm; }
+    .cover img { width: 130px; margin-bottom: 1.2cm; }
+    .pertemuan-num { text-align: center; font-size: 26pt !important; font-weight: 300; color: #14b8a6; margin-bottom: 1cm; text-transform: uppercase; letter-spacing: 3px; }
+    h1 { font-size: 16pt; font-weight: 500; text-align: center; margin-top: 1.5cm; margin-bottom: .4cm; color: #0f766e; letter-spacing: -.3px; }
+    .subtitle { text-align: center; font-size: 10pt !important; color: #64748b; margin-bottom: 1.2cm; font-weight: 400; }
+    .cover .line { width: 40px; height: 2px; background: #14b8a6; margin: .6cm auto; }
+    .cover .info { font-size: 10pt; color: #64748b; margin-top: 1.2cm; text-align: center; }
+    .cover .info span { display: block; font-size: 9pt; color: #94a3b8; margin-top: 4px; }
+
+    /* ACADEMIC TYPOGRAPHY SCALING */
+    h2 { font-size: 15px; font-weight: 500; color: #0f766e; margin-top: 1.2cm; margin-bottom: .35cm; padding-bottom: 3px; border-bottom: 1.5px solid #ccfbf1; display: flex; align-items: center; gap: 8px; }
+    h2[id], h3[id] { scroll-margin-top: 24px; }
+    h3 { font-size: 13.5px; font-weight: 500; color: #115e59; margin-top: .8cm; margin-bottom: .25cm; }
+    h4 { font-size: 12.5px; font-weight: 500; color: #1e293b; margin-top: .5cm; margin-bottom: .2cm; }
+
+    p { font-size: 12px; margin-bottom: .35cm; text-align: justify; color: #334155; line-height: 1.65; }
+    ul, ol { margin-left: 0.8cm; margin-bottom: .35cm; }
+    li { font-size: 12px !important; margin-bottom: .12cm; color: #334155; line-height: 1.6; text-align: justify; }
+    table { width: 100%; border-collapse: collapse; margin: .4cm 0; font-size: 9pt; border-radius: 6px; overflow: hidden; border: 1px solid #cbd5e1; }
+    th { background: #0f766e; color: #fff; padding: 6px 8px; text-align: left; font-weight: 500; }
+    td { padding: 5px 8px; border-bottom: 1px solid #e2e8f0; color: #334155; vertical-align: top; text-align: justify; font-size: 11px; }
+    tr:nth-child(even) td { background: #f8fafc; }
+
+    /* Highlight Cards & Info Boxes */
+    .info-box { background: #f0fdfa; border-left: 3px solid #14b8a6; padding: 10px 14px; margin: .4cm 0; border-radius: 0 4px 4px 0; font-size: 12px; text-align: justify; }
+    .info-box p { margin-bottom: 0; color: #134e4a; text-align: justify; font-size: 12px; }
+    .tip-box { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 10px 14px; margin: .4cm 0; border-radius: 0 4px 4px 0; font-size: 12px; text-align: justify; }
+    .tip-box p { margin-bottom: 0; color: #78350f; text-align: justify; font-size: 12px; }
+    .warning-box { background: #fef2f2; border-left: 3px solid #ef4444; padding: 10px 14px; margin: .4cm 0; border-radius: 0 4px 4px 0; font-size: 12px; text-align: justify; }
+    .warning-box p { margin-bottom: 0; color: #991b1b; text-align: justify; font-size: 12px; }
+
+    .toc { margin: .6cm 0; padding: .3cm .6cm; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; }
+    .toc h3 { margin-top: 0; color: #0f766e; font-size: 13.5px; border-bottom: 1px solid #cbd5e1; padding-bottom: 6px; }
+    .toc ol { counter-reset: toc; margin-top: 8px; }
+    .toc li { list-style: none; counter-increment: toc; margin-bottom: 4px; color: #475569; font-size: 12px !important; text-align: left; }
+    .toc li:before { content: counter(toc)". "; font-weight: 500; color: #14b8a6; }
+    .toc a { color: #334155; text-decoration: none; transition: color 0.15s ease, padding-left 0.15s ease; }
+    .toc a:hover { color: #0f766e; text-decoration: underline; padding-left: 2px; }
+
+    .step-box { text-align: justify; background: #f8fafc; padding: 8px 12px; margin: .3cm 0; border-radius: 6px; border: 1px solid #e2e8f0; border-left: 3px solid #0f766e; }
+    .step-box ol { margin-bottom: 0; margin-left: 0.6cm; }
+    .step-box li { text-align: justify; margin-bottom: 2px; font-size: 12px !important; }
+
+    .deliverable { text-align: justify; background: #f0fdfa; border: 1.5px solid #14b8a6; padding: 12px 16px; margin: .5cm 0; border-radius: 6px; }
+    .deliverable p { text-align: justify; margin: 0; font-weight: 500; color: #0f766e; }
+    .deliverable ul { margin-top: 6px; margin-bottom: 0; }
+    .deliverable li { text-align: justify; color: #0f766e; font-size: 12px !important; }
+
+    /* Screenshot Card Styling */
+    .screenshot-card { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; margin: .5cm 0; text-align: center; }
+    .screenshot-card img { max-width: 100%; height: auto; border-radius: 6px; border: 1px solid #e2e8f0; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: block; margin: 0 auto; }
+    .screenshot-caption { font-size: 8.5pt; color: #64748b; margin-top: 6px; font-style: italic; }
+
+    .footer { margin-top: 2cm; padding: .4cm 0 .6cm; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: flex-start; font-size: 10px; color: #94a3b8; line-height: 1.5; }
+    .footer-right { text-align: right; color: #94a3b8; }
+
+    /* PANDA THEME VSCODE STYLING */
+    strong, b {
+      font-weight: 500 !important;
+      color: #0f172a !important;
+    }
+    p code, li code, span code, td code {
+      background: transparent !important;
+      color: #0f766e !important;
+      padding: 0 !important;
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
+      font-size: 0.95em !important;
+      font-weight: 500 !important;
+      border-radius: 0 !important;
+      white-space: pre-wrap !important;
+      word-break: break-word !important;
+      display: inline !important;
+    }
+    pre, code, pre code, pre span, pre * {
+      white-space: pre-wrap !important;
+      word-break: break-word !important;
+    }
+    .code-box {
+      background: #242526 !important;
+      border: 1px solid #343638 !important;
+      border-radius: 8px !important;
+      margin: 16px 0 !important;
+      overflow: hidden !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+      text-align: left !important;
+    }
+    .code-header {
+      background: #1e1f20 !important;
+      padding: 8px 14px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      border-bottom: 1px solid #343638 !important;
+      font-family: 'JetBrains Mono', monospace !important;
+      font-size: 9px !important;
+      color: #8c9296 !important;
+    }
+    .code-title {
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      font-weight: 500 !important;
+      color: #c5c8c6 !important;
+    }
+    .code-lang {
+      text-transform: uppercase !important;
+      font-size: 8px !important;
+      color: #ff9b5e !important;
+      background: rgba(255, 155, 94, 0.1) !important;
+      padding: 2px 6px !important;
+      border-radius: 4px !important;
+      font-weight: 500 !important;
+    }
+    .code-content {
+      padding: 12px 14px !important;
+      overflow-x: auto !important;
+      margin: 0 !important;
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
+      font-size: 9pt !important;
+      line-height: 1.5 !important;
+      color: #e6e6e6 !important;
+      background: #242526 !important;
+    }
+
+    selection { background: transparent !important; color: inherit !important; }
+
+    @media print { body { background: white; } .page { max-width: none; padding: 0; box-shadow: none; } }
+    @media screen and (max-width: 768px) {
+      body { font-size: 12px; background: white; }
+      .page { max-width: 100%; padding: 0 14px; box-shadow: none; }
+      h1 { font-size: 16pt; margin-top: 1cm; }
+      h2 { font-size: 15px; margin-top: .8cm; }
+      h3 { font-size: 13.5px; }
+      .footer { flex-direction: column; gap: 4px; text-align: center; padding-bottom: .6cm; }
+      .footer-left, .footer-right { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="cover">
+      <img src="/pdfs/logo.png" alt="Logo Sekolah Mutiara Bangsa 2" style="width:130px;margin-bottom:1.2cm" />
+      <p class="pertemuan-num">Pertemuan 12 ~ 14</p>
+      <h1 style="margin-top:0.5cm">Smart Grocery &amp; Price Tracker</h1>
+      <p class="subtitle">Analisis Kebutuhan Sistem Mobile PWA &amp; Logika Perhitungan Belanja Cerdas Berdasarkan Kasus Nyata</p>
+      <div class="line"></div>
+      <div class="info">
+        ICT Codehub Modul
+        <span>Kelas 12 • Academic Year 2026/2027 (Semester 1)</span>
+      </div>
+    </div>
+
+    <div class="toc">
+      <h3>Daftar Isi Pertemuan 12 ~ 14</h3>
+      <ol>
+        <li><a href="#section-1">Pengantar: Dari Fondasi Cloud Menuju Pemecahan Masalah Riil</a></li>
+        <li><a href="#section-2">Studi Kasus Utama: Dilema Belanja Bulanan Anak Rantau</a></li>
+        <li><a href="#section-3">Target Kebutuhan Analisis Sistem Siswa</a></li>
+        <li><a href="#section-4">Checklist Fitur Wajib &amp; Spesifikasi Kebutuhan Aplikasi (SRS)</a></li>
+        <li><a href="#section-5">Perbandingan Alur Kerja: Manual Belanja vs Sistem Cerdas</a></li>
+        <li><a href="#section-6">Arsitektur Aplikasi: Mobile PWA Bergaya Native App</a></li>
+        <li><a href="#section-7">Panduan Setup Workspace &amp; Version Control (GitHub &amp; Antigravity IDE)</a></li>
+        <li><a href="#section-8">Prompting Arsitektur Sistem Menggunakan Antigravity IDE</a></li>
+        <li><a href="#section-9">Integrasi Cloud Database Firebase &amp; Konsultasi Skema Data (SRS F-06)</a></li>
+        <li><a href="#section-10">Alur Progres Mandiri &amp; Kelanjutan Menuju DT2</a></li>
+      </ol>
+    </div>
+
+    <h2 id="section-1">1. Pengantar: Dari Fondasi Cloud Menuju Pemecahan Masalah Riil</h2>
+    <p>
+      Setelah menyelesaikan dua pekan pendalaman fondasi Antigravity IDE, Version Control Git, dan Cloud Database pada Pertemuan 10 dan 11, 
+      kini saatnya kamu melangkah ke tahap engineering yang sesungguhnya. Seorang software engineer tidak hanya bertugas mengetik baris kode, 
+      tetapi harus mampu mendengarkan cerita pengguna, membedah masalah yang tersirat, lalu merumuskan spesifikasi perangkat lunak yang presisi.
+    </p>
+
+    <h2 id="section-2">2. Studi Kasus Utama: Dilema Belanja Bulanan Anak Rantau</h2>
+    <p>
+      Pelajari narasi kehidupan seorang anak kos berikut dengan cermat untuk memahami masalah dan titik kritis yang ia alami setiap bulan:
+    </p>
+
+    <div class="info-box">
+      <p style="font-style: normal; line-height: 1.7;">
+        Rian adalah siswa rantau yang kini harus hidup mandiri di kamar kos berukuran 3x3 meter. Setiap tanggal 1, orang tuanya mengirimkan uang saku bulanan dengan jumlah yang sangat ketat. Dari jatah tersebut, Rian harus menyisihkan sebagian besar uangnya untuk belanja kebutuhan pokok bulanan: beras, minyak goreng, sabun cuci, pasta gigi, hingga makanan instan.
+        <br><br>
+        Masalah selalu berulang setiap kali Rian melangkahkan kaki ke supermarket grosir di kotanya.
+        <br><br>
+        Pertama, ia sering terjebak situasi memalukan di depan kasir. Saat antrean di belakangnya mengular, total tagihan yang tertera di mesin kasir sering kali melompat jauh di luar perkiraan isi dompetnya. Akibatnya, Rian terpaksa menahan malu meminta kasir membatalkan beberapa kaleng makanan atau sabun mandi yang sudah terlanjur di-scan.
+        <br><br>
+        Kedua, lorong supermarket selalu penuh dengan papan promo yang menjebak. Pekan lalu, Rian melihat botol sabun pembersih lantai yang dipajang dengan label "Promo Cuci Gudang: Potongan 50% + Ekstra 20%". Di sebelahnya, ada produk serupa dengan potongan langsung Rp 15.000. Karena buru-buru dan malas menghitung di kepala, Rian mengambil produk diskon bertumpuk itu, hanya untuk mendapati bahwa harga akhirnya setelah dihitung kasir ternyata masih lebih mahal dari merek sebelah. Belum lagi saat ia harus memutuskan apakah lebih hemat membeli minyak goreng kemasan 1 liter seharga Rp 18.000 sebanyak tiga kantong, atau langsung membeli jerigen 5 liter seharga Rp 85.000.
+        <br><br>
+        Ketiga, Rian punya kebiasaan menyimpan struk belanjaan bulan-bulan sebelumnya di laci meja belajarnya, namun kertas struk thermal itu cepat buram dan tintanya hilang. Kemarin, saat ia ingin membeli telur dan beras, ia merasa yakin harganya naik tajam dibanding bulan lalu, tetapi ia tidak punya cara cepat untuk membuktikannya di tempat saat masih berdiri di depan rak barang. Rian butuh kepastian langsung detik itu juga: apakah harga barang yang sedang ia pegang saat ini sedang melonjak mahal sehingga harus ditunda belinya, ataukah justru sedang berada di harga terendahnya sehingga layak diborong lebih banyak.
+        <br><br>
+        Rian membutuhkan sebuah media pencatatan cerdas yang bisa ia andalkan langsung dari genggamannya saat mendorong troli. Sebuah catatan yang tidak membiarkannya menghitung manual saat mengambil barang dalam jumlah banyak, tidak membuatnya terkecoh oleh label diskon bertingkat di rak belanja, memberinya sinyal tegas apakah barang yang ingin dibeli sedang naik atau turun dibanding catatan belanja bulan lalunya, dan memastikan total belanjaannya tidak pernah melebihi uang tunai di dompetnya sebelum ia melangkah ke meja kasir.
+      </p>
+    </div>
+
+    <h2 id="section-3">3. Target Kebutuhan Analisis Sistem Siswa</h2>
+    <p>
+      Berdasarkan cerita di atas, kamu wajib membedah kebutuhan Rian ke dalam poin spesifikasi sistem yang terarah:
+    </p>
+    <div class="step-box">
+      <ol>
+        <li><strong>Struktur Data Belanja:</strong> Tentukan atribut apa saja yang wajib dicatat pada setiap barang (nama barang, kategori, satuan ukuran seperti kg/liter/pcs, kuantitas, harga satuan, dan harga riwayat bulan lalu).</li>
+        <li><strong>Logika Perhitungan Kuantitas:</strong> Mekanisme agar saat kuantitas diubah, total harga per item langsung terhitung otomatis tanpa perlu menekan tombol kalkulator manual.</li>
+        <li><strong>Logika Diskon Bertingkat:</strong> Perhitungan matematis diskon bertumpuk (contoh: promo 50% + 20% berarti harga awal dipotong 50%, lalu sisa harganya dipotong lagi 20%, bukan potongan langsung 70%).</li>
+        <li><strong>Deteksi Fluktuasi Harga Realtime:</strong> Logika pembanding yang langsung membandingkan harga inputan saat ini dengan harga bulan lalu pada barang yang sama, lalu menampilkan indikator visual perubahan harga.</li>
+        <li><strong>Pengendali Anggaran (Budget Safety Cap):</strong> Fitur pemantau saldo saku di mana total belanjaan terus diakumulasikan dan memberikan tanda bahaya jika total mendekati batas uang tunai yang dibawa.</li>
+      </ol>
+    </div>
+
+    <h2 id="section-4">4. Checklist Fitur Wajib &amp; Spesifikasi Kebutuhan Aplikasi (SRS)</h2>
+    <p>
+      Gunakan tabel checklist berikut sebagai acuan spesifikasi kebutuhan sistem. Dalam dunia rekayasa perangkat lunak (software engineering), daftar ini dikenal sebagai <strong>Software Requirements Specification (SRS)</strong> atau daftar spesifikasi kebutuhan aplikasi, yaitu dokumen acuan yang mencatat semua fitur yang wajib ada agar sistem bekerja menjawab masalah pengguna:
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 12%;">Kode</th>
+          <th style="width: 28%;">Nama Fitur Target</th>
+          <th style="width: 42%;">Spesifikasi &amp; Perilaku yang Diharapkan</th>
+          <th style="width: 18%;">Status Validasi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>F-01</strong></td>
+          <td>Pencatatan Item Belanja Lengkap</td>
+          <td>Menyimpan nama produk, kategori barang, satuan (kg, liter, pcs, pack), kuantitas beli, dan harga satuan per item.</td>
+          <td>Wajib Ada</td>
+        </tr>
+        <tr>
+          <td><strong>F-02</strong></td>
+          <td>Perhitungan Kuantitas Otomatis</td>
+          <td>Perubahan angka kuantitas (Qty) langsung mengalikan harga satuan secara realtime ke total baris item.</td>
+          <td>Wajib Ada</td>
+        </tr>
+        <tr>
+          <td><strong>F-03</strong></td>
+          <td>Kalkulator Diskon Bertingkat</td>
+          <td>Menangani input diskon tunggal (contoh: 25%) maupun diskon bertumpuk (contoh: 50% + 20%) dengan rumus matematis yang tepat.</td>
+          <td>Wajib Ada</td>
+        </tr>
+        <tr>
+          <td><strong>F-04</strong></td>
+          <td>Komparator Harga Realtime vs Bulan Lalu</td>
+          <td>
+            Menampilkan indikator visual seketika saat harga diinput:
+            <br>&bull; <strong>Panah Merah Naik (&uarr;)</strong>: Jika harga naik dibanding bulan lalu.
+            <br>&bull; <strong>Panah Hijau Turun (&darr;)</strong>: Jika harga turun dibanding bulan lalu.
+            <br>&bull; <strong>Tanda Setara (=)</strong>: Jika harga stabil/tetap.
+          </td>
+          <td>Wajib Ada</td>
+        </tr>
+        <tr>
+          <td><strong>F-05</strong></td>
+          <td>Pengendali Anggaran (Safety Cap)</td>
+          <td>Input batas maksimal dompet dengan indikator warna visual yang menyala merah jika total keranjang mendekati atau melampaui limit.</td>
+          <td>Wajib Ada</td>
+        </tr>
+        <tr>
+          <td><strong>F-06</strong></td>
+          <td>Riwayat &amp; Database Belanja</td>
+          <td>Data belanja tersimpan rapi ke dalam penyimpanan data (lokal / cloud) agar menjadi data pembanding resmi untuk bulan berikutnya.</td>
+          <td>Wajib Ada</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="section-5">5. Perbandingan Alur Kerja: Manual Belanja vs Sistem Cerdas</h2>
+    <p>
+      Berikut perbandingan alur saat Rian berbelanja tanpa dan dengan bantuan sistem:
+    </p>
+    <ul>
+      <li><strong>Alur Manual (Lama):</strong> Masuk supermarket &rarr; tebak-tebak promo di rak &rarr; hitung manual di kepala / kalkulator HP &rarr; panik di depan kasir karena total melebihi dompet &rarr; terpaksa membatalkan barang belanjaan.</li>
+      <li><strong>Alur Sistem Cerdas (Baru):</strong> Masuk supermarket &rarr; input barang &amp; kuantitas di web &rarr; sistem otomatis hitung diskon bertingkat &amp; komparasi harga bulan lalu &rarr; indikator warna memantau limit dompet secara aman &rarr; bayar di kasir dengan tenang dan presisi.</li>
+    </ul>
+
+    <h2 id="section-6">6. Arsitektur Aplikasi: Mobile PWA Bergaya Native App</h2>
+    <p>
+      Satu hal krusial yang wajib dipahami sejak awal: aplikasi ini <strong>bukan aplikasi desktop untuk komputer atau laptop</strong>, 
+      melainkan <strong>aplikasi mobile murni</strong>. Saat berbelanja di supermarket, Rian memegang smartphone dengan satu tangan 
+      sambil tangan lainnya mendorong troli barang. Jika aplikasi dirancang dengan layout tabel desktop yang melebar ke samping, 
+      aplikasi tersebut tidak akan bisa dipakai di lapangan.
+    </p>
+
+    <div class="info-box">
+      <p>
+        <strong>Konsep PWA (Progressive Web App) Bergaya Native:</strong> PWA adalah website modern yang dibangun dengan standar HTML, 
+        CSS, dan JavaScript, namun dirancang dan berperilaku persis seperti aplikasi mobile native (seperti aplikasi Android/iOS). 
+        Ciri utama mobile PWA yang wajib diimplementasikan:
+      </p>
+    </div>
+
+    <ul>
+      <li><strong>Viewport &amp; Frame Khusus Mobile:</strong> Tampilan aplikasi dibatasi pada lebar layar smartphone (maksimal 430px dan berada di tengah layar jika dibuka lewat browser laptop/PC).</li>
+      <li><strong>Bottom Navigation Bar (Navigasi Bawah):</strong> Menu utama diletakkan melayang di bagian paling bawah layar dengan ikon yang jelas (misalnya: menu Belanja, Riwayat, dan Anggaran) agar mudah dijangkau oleh jempol pengguna saat memegang HP dengan satu tangan.</li>
+      <li><strong>Elemen Sentuh Ramah Jempol (Touch-Friendly):</strong> Tombol aksi, stepper kuantitas (+ / -), dan form input dirancang berukuran cukup besar dengan jarak antar tombol yang nyaman untuk disentuh jari tanpa salah tekan.</li>
+      <li><strong>Dukungan Instalasi Layar Utama (Add to Home Screen):</strong> Melalui konfigurasi meta tag mobile dan file manifest, website ini dapat dipasang langsung ke layar utama smartphone pengguna tanpa harus melalui proses panjang di toko aplikasi Google Play Store maupun Apple App Store.</li>
+    </ul>
+
+    <h2 id="section-7">7. Panduan Setup Workspace &amp; Version Control (GitHub &amp; Antigravity IDE)</h2>
+    <p>
+      Mulai pertemuan ini, kamu tidak lagi membuat folder lokal secara manual tanpa kontrol versi di komputer lab. Seluruh pekerjaan proyek wajib terhubung langsung dengan akun GitHub menggunakan Version Control Git sejak awal agar kodemu aman, riwayat pembaruan terlacak, dan siap dipublikasikan ke cloud.
+    </p>
+    <p>
+      Tersedia dua metode yang dapat kamu pilih untuk menghubungkan repository GitHub ke Antigravity IDE:
+    </p>
+
+    <h3>Metode 1: Alur Otomatis Menggunakan Antigravity IDE (Rekomendasi)</h3>
+    <p>
+      Metode ini memanfaatkan fitur bawaan Antigravity IDE untuk mengunduh (clone) repository GitHub secara visual tanpa perlu mengetik perintah terminal:
+    </p>
+
+    <h4>Langkah 1: Buat Repository Baru di GitHub</h4>
+    <p>
+      Buka browser dan masuk ke akun GitHub kamu. Buat repository baru dengan memberi nama proyek (misalnya: <code>myfirstapp</code> atau <code>smart-grocery-tracker</code>), pilih visibilitas <strong>Public</strong>, dan pastikan opsi <strong>Add a README file</strong> dicentang (On) agar branch <code>main</code> langsung terbuat. Setelah itu klik tombol hijau <strong>Create repository</strong>.
+    </p>
+    <div class="screenshot-card">
+      <img src="/pdfs/SMA/Kelas-12/P12~P14 - Smart Grocery & Price Tracker/step1-create-repo.png" alt="Langkah 1: Membuat Repository Baru di GitHub" />
+      <div class="screenshot-caption">Gambar 1: Pembuatan repository baru di GitHub dengan visibilitas Public dan Add a README file aktif.</div>
+    </div>
+
+    <h4>Langkah 2: Salin (Copy) URL Repository</h4>
+    <p>
+      Pada halaman utama repository yang baru dibuat, klik tombol hijau <strong>&lt;&gt; Code</strong>. Pastikan tab <strong>Local &gt; HTTPS</strong> aktif, lalu klik ikon salin (<strong>Copy URL to clipboard</strong>) untuk menyalin alamat web repository (contoh: <code>https://github.com/username/myfirstapp.git</code>).
+    </p>
+    <div class="screenshot-card">
+      <img src="/pdfs/SMA/Kelas-12/P12~P14 - Smart Grocery & Price Tracker/step2-copy-repo-url.png" alt="Langkah 2: Menyalin URL HTTPS Repository GitHub" />
+      <div class="screenshot-caption">Gambar 2: Menyalin URL repository HTTPS melalui menu dropdown Code.</div>
+    </div>
+
+    <h4>Langkah 3: Pilih Fitur Clone Repository di Antigravity IDE</h4>
+    <p>
+      Buka Antigravity IDE di komputer lab atau laptopmu. Pada halaman pembuka atau melalui panel <strong>Source Control</strong>, klik tombol <strong>Clone Repository</strong>. Kamu juga bisa menekan tombol pintas <code>Ctrl + Shift + P</code> lalu mengetik <code>Git: Clone</code>.
+    </p>
+    <div class="screenshot-card" style="max-width: 580px; margin-left: auto; margin-right: auto;">
+      <img src="/pdfs/SMA/Kelas-12/P12~P14 - Smart Grocery & Price Tracker/step3-antigravity-clone-repo.png" alt="Langkah 3: Tombol Clone Repository di Antigravity IDE" />
+      <div class="screenshot-caption">Gambar 3: Tombol Clone Repository pada halaman utama Antigravity IDE.</div>
+    </div>
+
+    <h4>Langkah 4: Tempel (Paste) URL Repository</h4>
+    <p>
+      Tempelkan tautan yang sudah kamu salin dari GitHub ke dalam kotak input yang muncul di bagian atas jendela Antigravity IDE, lalu tekan tombol <strong>Enter</strong> pada keyboard atau klik opsi <strong>Clone from URL</strong>.
+    </p>
+    <div class="screenshot-card" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+      <img src="/pdfs/SMA/Kelas-12/P12~P14 - Smart Grocery & Price Tracker/step4-paste-repo-url.png" alt="Langkah 4: Menempelkan URL Repository ke Kolom Input IDE" />
+      <div class="screenshot-caption">Gambar 4: Menempelkan URL repository ke kolom input Clone from URL di Antigravity IDE.</div>
+    </div>
+
+    <h4>Langkah 5: Tentukan Lokasi Penyimpanan di Documents</h4>
+    <p>
+      Jendela File Explorer Windows akan muncul meminta lokasi folder penyimpanan. Klik folder <strong>Documents</strong> di panel navigasi sebelah kiri, kemudian klik tombol biru <strong>Select as Repository Destination</strong>.
+    </p>
+    <div class="screenshot-card" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+      <img src="/pdfs/SMA/Kelas-12/P12~P14 - Smart Grocery & Price Tracker/step5-select-documents-destination.png" alt="Langkah 5: Memilih Folder Documents Sebagai Destinasi Clone" />
+      <div class="screenshot-caption">Gambar 5: Memilih folder Documents sebagai lokasi destinasi clone repository.</div>
+    </div>
+
+    <h4>Langkah 6: Buka Folder Repository</h4>
+    <p>
+      Setelah proses pengunduhan selesai, notifikasi konfirmasi akan muncul di pojok kanan bawah: <em>"Would you like to open the repository?"</em>. Klik tombol biru <strong>Open</strong>. Folder kerjamu kini telah terbuka dan langsung terhubung secara otomatis ke sistem Git.
+    </p>
+    <div class="screenshot-card" style="max-width: 540px; margin-left: auto; margin-right: auto;">
+      <img src="/pdfs/SMA/Kelas-12/P12~P14 - Smart Grocery & Price Tracker/step6-open-repository-prompt.png" alt="Langkah 6: Notifikasi Konfirmasi Membuka Repository" />
+      <div class="screenshot-caption">Gambar 6: Mengklik tombol Open untuk langsung membuka folder kerja proyek di Antigravity IDE.</div>
+    </div>
+
+    <h3>Metode 2: Alur Manual Menggunakan Terminal Command Prompt</h3>
+    <p>
+      Bagi kamu yang lebih terbiasa dengan terminal atau sedang memindahkan proyek antar komputer lab, gunakan alur perintah Git berikut:
+    </p>
+
+    <div class="info-box">
+      <p>
+        <strong>Konfigurasi Identitas Siswa (Cukup 1 Kali di PC Lab):</strong><br>
+        Buka terminal Command Prompt dan pastikan Git mengenali identitas akunmu sebelum membuat commit:
+      </p>
+    </div>
+    <div class="code-box">
+      <div class="code-header">
+        <span class="code-title">Konfigurasi Identitas Git Global</span>
+        <span class="code-lang">BASH / CMD</span>
+      </div>
+      <pre class="code-content">git config --global user.name "Nama Lengkap Kamu"
+git config --global user.email "email-terdaftar-di-github@email.com"</pre>
+    </div>
+
+    <h4>Skenario A: Memulai Proyek Baru dari Nol (Start from Scratch)</h4>
+    <div class="step-box">
+      <ol>
+        <li>Buat repository baru di GitHub dan salin URL HTTPS repository tersebut.</li>
+        <li>Buka terminal Command Prompt di komputermu, masuk ke folder Documents, dan lakukan cloning:
+          <div class="code-box" style="margin: 6px 0 !important;">
+            <div class="code-header">
+              <span class="code-title">Terminal - Clone Repository Baru</span>
+              <span class="code-lang">CMD</span>
+            </div>
+            <pre class="code-content">cd Documents
+git clone https://github.com/username-kamu/nama-repo-kamu.git</pre>
+          </div>
+        </li>
+        <li>Buka Antigravity IDE, klik <strong>File &gt; Open Folder...</strong>, lalu pilih folder proyek yang baru saja di-clone di dalam folder Documents.</li>
+        <li>Buat dan kembangkan aplikasi melalui interaksi prompt bersama AI di Antigravity IDE.</li>
+        <li>Simpan hasil kerja perdana ke GitHub dengan rangkaian perintah berikut di terminal:
+          <div class="code-box" style="margin: 6px 0 !important;">
+            <div class="code-header">
+              <span class="code-title">Terminal - First Commit &amp; Push</span>
+              <span class="code-lang">CMD</span>
+            </div>
+            <pre class="code-content">git add .
+git commit -m "first commit: inisialisasi smart grocery tracker"
+git push origin main</pre>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <h4>Skenario B: Melanjutkan atau Mengedit Proyek yang Sudah Ada</h4>
+    <p>
+      Jika kamu berpindah ke PC lab lain atau ingin melanjutkan aplikasi yang sudah pernah dibuat sebelumnya:
+    </p>
+    <div class="step-box">
+      <ol>
+        <li>Buka terminal Command Prompt dan unduh repository yang sudah ada:
+          <div class="code-box" style="margin: 6px 0 !important;">
+            <div class="code-header">
+              <span class="code-title">Terminal - Unduh Proyek yang Ada</span>
+              <span class="code-lang">CMD</span>
+            </div>
+            <pre class="code-content">cd Documents
+git clone https://github.com/username-kamu/nama-repo-kamu.git</pre>
+          </div>
+          <em>Catatan: Jika folder proyek sudah tersimpan di PC tersebut, kamu cukup membuka Antigravity IDE lalu klik menu <strong>File &gt; Open Folder...</strong>.</em>
+        </li>
+        <li>Buka Antigravity IDE, buka foldernya, lalu lakukan perbaikan, penambahan fitur, atau refactoring kode bersama AI.</li>
+        <li>Setelah pengujian berjalan lancar, simpan dan kirim pembaruan kode ke GitHub:
+          <div class="code-box" style="margin: 6px 0 !important;">
+            <div class="code-header">
+              <span class="code-title">Terminal - Commit &amp; Push Pembaruan</span>
+              <span class="code-lang">CMD</span>
+            </div>
+            <pre class="code-content">git add .
+git commit -m "pesan perbaikan atau pembaruan kamu"
+git push origin main</pre>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <h2 id="section-8">8. Prompting Arsitektur Sistem Menggunakan Antigravity IDE</h2>
+    <p>
+      Setelah spesifikasi kebutuhan dan checklist F-01 sampai F-06 kamu kuasai, instruksikan Antigravity IDE untuk membangun prototype aplikasi mobile PWA pertamamu dengan bantuan kerangka prompt berikut:
+    </p>
+
+    <div class="code-box">
+      <div class="code-header">
+        <span class="code-title">Bantuan Prompt Awal - Smart Grocery Mobile PWA</span>
+        <span class="code-lang">PROMPT</span>
+      </div>
+      <pre class="code-content">Bertindaklah sebagai software developer profesional. Saya sedang membangun aplikasi web mobile (PWA - Progressive Web App) "Smart Grocery &amp; Budget Safety Tracker" bergaya native app untuk seorang siswa rantau yang belanja bulanan sambil mendorong troli supermarket.
+
+PENTING - Standar Arsitektur &amp; Tampilan Mobile (Bukan Desktop App):
+1. Format Layar: Desain khusus tampilan smartphone (Mobile UI) dengan lebar maksimal 430px (centered di layar jika dibuka di browser desktop).
+2. Navigasi Bawah (Bottom Navigation Bar): Sediakan menu navigasi melayang di bagian bawah dengan ikon Lucide untuk tab menu utama (Belanja, Riwayat, Anggaran).
+3. Ergonomi Mobile: Komponen input angka besar, tombol sentuh ramah jempol (touch-friendly), dan tanpa layout tabel desktop yang melebar ke samping.
+4. Dukungan PWA: Siapkan struktur meta tag mobile viewport dan manifest agar aplikasi dapat dipasang langsung ke layar utama smartphone (Add to Home Screen / standalone mode).
+
+Kebutuhan Fungsional (Wajib Sesuai Checklist SRS):
+- ....</pre>
+    </div>
+
+    <div class="tip-box" style="text-align: justify; background: #fffbeb; border-left: 3px solid #f59e0b; padding: 10px 14px; margin: .4cm 0; border-radius: 0 4px 4px 0;">
+      <p style="text-align: justify; margin-bottom: 0; color: #78350f;"><strong>Petunjuk Pengerjaan Prompt Siswa:</strong> Masukkan kerangka pembuka di bawah ini ke panel chat Antigravity IDE. Tugasmu adalah melanjutkan baris titik-titik (<code>- ....</code>) secara mandiri dengan menerjemahkan 6 spesifikasi fitur wajib (<strong>F-01 sampai F-06</strong>) dari <strong>tabel SRS di Bagian 4</strong> menjadi instruksi teknis terperinci agar AI membangun aplikasi sesuai kebutuhan Rian.</p>
+    </div>
+
+    <p>
+      Lengkapi tanda titik-titik (<code>- ....</code>) di atas dengan rincian kebutuhan fitur F-01 sampai F-06 dari tabel SRS Bagian 4 menggunakan kalimat analisismu sendiri sebelum mengirimkan prompt ke Antigravity IDE.
+    </p>
+
+    <p>
+      Untuk menguji tampilan mobile di browser Google Chrome komputermu, klik kanan file <code>index.html</code> lalu pilih <strong>Open with Google Chrome</strong>. Tekan tombol <code>F12</code> untuk membuka Chrome DevTools, lalu klik ikon <strong>Toggle Device Toolbar</strong> (ikon HP/tablet di pojok kiri atas jendela DevTools atau tekan <code>Ctrl + Shift + M</code>) untuk melihat simulasi tampilan layar smartphone asli.
+    </p>
+
+    <h2 id="section-9">9. Integrasi Cloud Database Firebase &amp; Konsultasi Skema Data (SRS F-06)</h2>
+    <p>
+      Setelah tampilan mobile PWA selesai dan fitur kalkulasi lokal (F-01 sampai F-05) bekerja dengan baik, langkah berikutnya adalah memenuhi spesifikasi <strong>SRS F-06 (Riwayat &amp; Database Belanja)</strong> agar seluruh barang belanjaan, riwayat belanja bulan lalu, serta batas anggaran dompet tersimpan secara permanen di cloud database.
+    </p>
+
+    <div class="tip-box" style="text-align: justify; background: #fffbeb; border-left: 3px solid #f59e0b; padding: 10px 14px; margin: .4cm 0; border-radius: 0 4px 4px 0;">
+      <p style="text-align: justify; margin-bottom: 0; color: #78350f;">
+        <strong>Prinsip Penting Sebelum Menghubungkan Firebase:</strong> Jangan langsung menyuruh AI menempelkan kode Firebase tanpa analisis awal. Minta AI membaca seluruh arsitektur proyekmu terlebih dahulu agar AI memahami variabel dan skema data apa saja yang perlu disimpan ke database cloud Firestore secara efisien.
+      </p>
+    </div>
+
+    <h3>Template Prompt Analisis &amp; Integrasi Firebase</h3>
+    <p>
+      Salin kerangka prompt di bawah ini ke panel chat Antigravity IDE. Siswa dapat menggunakan prompt ini untuk berkonsultasi variabel terlebih dahulu dan menghubungkan project ke Firebase:
+    </p>
+
+    <div class="code-box">
+      <div class="code-header">
+        <span class="code-title">Prompt Konsultasi Variabel &amp; Integrasi Firebase</span>
+        <span class="code-lang">PROMPT</span>
+      </div>
+      <pre class="code-content">Tolong cek dan pelajari project ini, ini adalah aplikasi Smart Grocery &amp; Price Tracker. Dari semua fitur yang ada, jika saya ingin hubungkan ke firebase, variabel apa yang bisa disimpan disana. Jelaskan dalam kalimat ringkas dan mudah saya pahami. Setelah itu tolong hubungkan aplikasi ini ke firebase dengan firebase_config dibawah ini, konfirmasi dulu sebelum memulai.
+
+// Konfigurasi Firebase dari Firebase Console:
+const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "proyek-kamu.firebaseapp.com",
+  projectId: "proyek-kamu",
+  storageBucket: "proyek-kamu.appspot.com",
+  messagingSenderId: "1234567890",
+  appId: "1:1234567890:web:..."
+};</pre>
+    </div>
+
+    <h3>Panduan Menyalin Konfigurasi dari Firebase Console</h3>
+    <div class="step-box">
+      <ol>
+        <li>Buka browser dan akses <strong>Firebase Console</strong> (<code>https://console.firebase.google.com/</code>) dengan akun Google aktifmu.</li>
+        <li>Pilih proyek yang telah dibuat pada Pertemuan 10 dan 11 (atau klik <em>Add project</em> jika belum ada).</li>
+        <li>Klik ikon gerigi di samping menu <em>Project Overview</em> (<strong>Project Settings</strong>), lalu scroll ke bawah ke bagian <strong>Your apps</strong>.</li>
+        <li>Pilih ikon Web (<code>&lt;/&gt;</code>) dan salin seluruh blok objek <code>const firebaseConfig = { ... };</code>.</li>
+        <li>Tempelkan objek konfigurasi tersebut menggantikan blok contoh pada prompt di atas, lalu kirim ke panel chat Antigravity IDE.</li>
+      </ol>
+    </div>
+    <p>
+      Dengan alur konsultasi dua tahap ini, AI akan terlebih dahulu memaparkan koleksi data yang akan disimpan (misalnya item belanja, histori perbandingan harga, dan limit saldo dompet) sebelum menuliskan logika penyimpanan ke Firestore di aplikasi PWA milikmu.
+    </p>
+
+    <h2 id="section-10">10. Alur Progres Mandiri &amp; Kelanjutan Menuju DT2</h2>
+    <p>
+      Pada Pertemuan 12 ~ 14 ini, kamu fokus sepenuhnya pada eksplorasi, perancangan analisis kebutuhan (SRS), 
+      penyusunan kerangka prototype mobile PWA di Antigravity IDE, serta pengujian sinkronisasi data cloud Firebase secara mandiri.
+    </p>
+
+    <div class="info-box">
+      <p>
+        <strong>Tanpa Pengumpulan Tugas di Pertemuan 12 ~ 14:</strong> Tidak ada form submit atau pengumpulan tugas pada pertemuan ini. 
+        Simpan seluruh file proyek dan catatan analisismu dengan aman di repository GitHub milikmu. 
+        Seluruh pengujian sistem dan pengumpulan hasil karya akhir akan dilakukan secara terpadu pada 
+        <strong>Pertemuan 15 saat pelaksanaan Daily Test 2 (DT2)</strong>.
+      </p>
+    </div>
+
+    <div class="footer">
+      <div class="footer-left">
+        ICT Codehub &bull; SMA Mutiara Bangsa 2 Tangerang<br>
+        Laboratorium Komputer &bull; Kurikulum Informatika 2026/2027
+      </div>
+      <div class="footer-right">
+        Modul P12: Smart Grocery &amp; Price Tracker<br>
+        Halaman 1 dari 1 (Dokumen Panduan Lengkap)
+      </div>
+    </div>
+  </div>
+</body>
+</html>

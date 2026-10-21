@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Smart Grocery Truckerr - Aplikasi Mobile PWA pencatatan belanja cerdas, komparasi harga realtime, dan budget safety cap untuk anak kos dan siswa mandiri.">
+  <meta name="theme-color" content="#0f766e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="GroceryTruckerr">
+  
+  <title>Smart Grocery Truckerr - Budget Safety &amp; Price Tracker</title>
+  
+  <!-- Favicon & PWA Icons -->
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+  <link rel="apple-touch-icon" href="./icons/icon.svg">
+  <link rel="manifest" href="./manifest.json">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+  <!-- MOBILE VIEWPORT (Max-width 430px centered) -->
+  <div class="app-viewport">
+    
+    <!-- Phone Notch for Realistic Desktop Testing -->
+    <div class="phone-notch"></div>
+
+    <!-- STICKY TOP APP HEADER -->
+    <header class="app-header">
+      <div class="top-bar">
+        <div class="brand-wrapper">
+          <div class="brand-icon-box" title="Smart Grocery Truckerr">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+            </svg>
+          </div>
+          <div class="brand-title-wrap">
+            <h1>Smart Grocery Truckerr</h1>
+            <div class="brand-badge">
+              <span class="badge-user" id="userProfileBadge">Rian (Anak Kos)</span>
+              <span>• PWA Mobile</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button type="button" class="btn-icon-header" onclick="openReceiptModal()" title="Lihat Struk Digital">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1Z"/>
+              <path d="M16 8h-8"/><path d="M16 12h-8"/><path d="M10 16h-2"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- SRS F-05: PENGENDALI ANGGARAN (BUDGET SAFETY CAP HERO) -->
+      <div class="budget-hero-card state-safe" id="budgetHeroCard">
+        <!-- Dynamic Alert Banner (Official SRS Specification) -->
+        <div class="safety-alert-banner banner-safe" id="safetyAlertBanner">
+          <span id="safetyAlertIcon" style="flex-shrink: 0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          </span>
+          <div id="safetyAlertText">
+            <strong>Dompet Aman:</strong> Anggaran terkendali. Sisa uang tunai mencukupi.
+          </div>
+        </div>
+
+        <!-- Budget Metric Row -->
+        <div class="safety-metric-row">
+          <div class="metric-col">
+            <small>Total Belanjaan</small>
+            <div class="metric-value" id="spentAmountVal">Rp 0</div>
+          </div>
+          <div class="metric-col text-right">
+            <small>Batas Uang Saku</small>
+            <div class="metric-limit" id="limitAmountVal">Rp 350.000</div>
+          </div>
+        </div>
+
+        <!-- Progress Track -->
+        <div class="budget-progress-track">
+          <div class="budget-progress-fill progress-safe" id="budgetProgressBar" style="width: 0%;"></div>
+        </div>
+
+        <!-- Subtext Percentage & Remaining -->
+        <div class="budget-subtext">
+          <span id="budgetPctVal">0.0% terpakai</span>
+          <span id="remainingAmountVal">Sisa Rp 350.000</span>
+        </div>
+      </div>
+
+      <!-- QUICK TEST ACTION STRIP (DT2 TEST CASES PRESET) -->
+      <div class="quick-action-strip">
+        <button type="button" class="btn-chip btn-chip-primary" onclick="loadDT2Scenario()" title="Muat 6 barang uji dari materi DT2">
+          🧪 Muat Data DT2
+        </button>
+        <button type="button" class="btn-chip" onclick="testBudgetCapTrigger('warning')" title="Simulasikan total belanja 92% (Waspada)">
+          ⚠️ Uji Waspada (90%)
+        </button>
+        <button type="button" class="btn-chip" onclick="testBudgetCapTrigger('danger')" title="Simulasikan total belanja overbudget (>100%)">
+          🚨 Uji Bahaya (&gt;100%)
+        </button>
+        <button type="button" class="btn-chip" onclick="testBudgetCapTrigger('safe')" title="Kembalikan batas saku normal Rp 350.000">
+          🛡️ Reset Normal
+        </button>
+      </div>
+    </header>
+
+    <!-- ==========================================================
+         TAB 1: DAFTAR BELANJA (SHOPPING CART & REAKTIVITAS)
+         ========================================================== -->
+    <main class="tab-view active" id="tabBelanja">
+      
+      <!-- Category Filter Pills -->
+      <div class="category-filter-bar">
+        <button type="button" class="cat-pill active" data-cat="ALL">Semua</button>
+        <button type="button" class="cat-pill" data-cat="Bahan Pokok">🌾 Bahan Pokok</button>
+        <button type="button" class="cat-pill" data-cat="Bumbu Dapur">🧂 Bumbu</button>
+        <button type="button" class="cat-pill" data-cat="Perawatan Diri">🧼 Mandi &amp; Cuci</button>
+        <button type="button" class="cat-pill" data-cat="Peralatan Rumah">🍳 Rumah</button>
+      </div>
+
+      <!-- Search & Add Bar -->
+      <div class="toolbar-row">
+        <div class="search-input-box">
+          <svg class="search-icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+          <input type="text" id="searchItemInput" placeholder="Cari beras, minyak, sabun...">
+        </div>
+        <button type="button" class="btn-add-item" onclick="openAddItemModal()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Tambah
+        </button>
+      </div>
+
+      <!-- Item Card List Container (Reactivity via F-01 & F-02) -->
+      <div class="item-card-list" id="itemListContainer">
+        <!-- Populated via JavaScript -->
+      </div>
+    </main>
+
+    <!-- ==========================================================
+         TAB 2: KALKULATOR ANTI-JEBAKAN PROMO
+         (Menjawab Kasus Diskon Bertumpuk & Jerigen Minyak Rian)
+         ========================================================== -->
+    <section class="tab-view" id="tabPromo">
+      
+      <!-- Tool 1: Compound Discount Calculator -->
+      <div class="tool-card">
+        <div class="tool-card-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-700)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 5 5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>
+          </svg>
+          <span>Kalkulator Diskon Bertingkat (F-03)</span>
+        </div>
+        <p class="tool-card-desc">
+          Hitung potongan promo bertumpuk (contoh: <code>50% + 20%</code>) atau potongan langsung (<code>Rp 15.000</code>) secara presisi tanpa salah hitung.
+        </p>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Harga Label (Rp)</label>
+            <input type="number" class="form-input" id="calcDiscBasePrice" value="100000" placeholder="100000">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Formula Promo</label>
+            <input type="text" class="form-input" id="calcDiscInput" value="50% + 20%" placeholder="50% + 20%">
+          </div>
+        </div>
+
+        <button type="button" class="btn-primary-block" onclick="runDiscountCalculator()" style="height: 38px;">
+          Hitung Diskon Sekarang
+        </button>
+
+        <div class="calc-result-box" id="calcDiscResult">
+          Tekan tombol di atas untuk melihat rincian potongan diskon.
+        </div>
+      </div>
+
+      <!-- Tool 2: Unit Price Comparator (Rian's Oil Dilemma) -->
+      <div class="tool-card">
+        <div class="tool-card-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-700)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span>Pembanding Ukuran Kemasan vs Harga Satuan</span>
+        </div>
+        <p class="tool-card-desc">
+          Bandingkan kemasan kecil vs jerigen besar (contoh: 3x botol 1L seharga Rp 18.000 vs jerigen 5L seharga Rp 85.000). Cari tahu mana yang benar-benar lebih murah!
+        </p>
+
+        <div class="form-group">
+          <label class="form-label">Satuan Pembanding</label>
+          <select class="form-select" id="unitCompareType">
+            <option value="Liter">Liter (Minyak, Sabun Cuci)</option>
+            <option value="Kilogram">Kilogram (Beras, Telur)</option>
+            <option value="Pcs">Pcs / Lembar (Tisu, Makanan)</option>
+            <option value="Mililiter">Mililiter (Shampoo, Saus)</option>
+          </select>
+        </div>
+
+        <div style="background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-md); padding: 10px; margin-bottom: 10px;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--slate-800); margin-bottom: 6px;">Opsi A (Kemasan Kecil)</div>
+          <div class="form-grid-2">
+            <input type="text" class="form-input" id="optAName" value="3x Kantong 1L" placeholder="Nama Opsi">
+            <input type="number" class="form-input" id="optASize" value="3" placeholder="Ukuran Total">
+          </div>
+          <div style="margin-top: 6px;">
+            <input type="number" class="form-input" id="optAPrice" value="54000" placeholder="Harga Total Opsi A (Rp)">
+          </div>
+        </div>
+
+        <div style="background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-md); padding: 10px; margin-bottom: 12px;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--slate-800); margin-bottom: 6px;">Opsi B (Jerigen / Kemasan Jumbo)</div>
+          <div class="form-grid-2">
+            <input type="text" class="form-input" id="optBName" value="Jerigen 5 Liter" placeholder="Nama Opsi">
+            <input type="number" class="form-input" id="optBSize" value="5" placeholder="Ukuran Total">
+          </div>
+          <div style="margin-top: 6px;">
+            <input type="number" class="form-input" id="optBPrice" value="85000" placeholder="Harga Total Opsi B (Rp)">
+          </div>
+        </div>
+
+        <button type="button" class="btn-primary-block" onclick="runUnitPriceComparison()" style="height: 38px;">
+          Bandingkan Nilai Kehematan
+        </button>
+
+        <div class="calc-result-box" id="unitCompareResult">
+          Tekan tombol di atas untuk menganalisis opsi termurah.
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         TAB 3: RIWAYAT BELANJA (SRS F-06)
+         ========================================================== -->
+    <section class="tab-view" id="tabRiwayat">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h2 style="font-size: 14px; font-weight: 700; color: var(--slate-900); border: none; margin: 0; padding: 0;">
+          Arsip Struk &amp; Riwayat Belanja
+        </h2>
+        <span style="font-size: 11px; color: var(--slate-500);">Tersimpan Permanen</span>
+      </div>
+
+      <div id="historyListContainer">
+        <!-- Populated via JavaScript -->
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         TAB 4: PENGATURAN & FIREBASE CLOUD (MODUL BAGIAN 9)
+         ========================================================== -->
+    <section class="tab-view" id="tabPengaturan">
+      
+      <!-- User Profile -->
+      <div class="settings-section-card">
+        <div class="settings-heading">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span>Profil Pengguna (Single User)</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nama Siswa / Anak Rantau</label>
+          <input type="text" class="form-input" id="settingProfileName" value="Rian (Anak Kos)">
+        </div>
+        <button type="button" class="btn-chip btn-chip-primary" onclick="updateProfileSetting()">
+          Simpan Profil
+        </button>
+      </div>
+
+      <!-- Budget Safety Cap Settings -->
+      <div class="settings-section-card">
+        <div class="settings-heading">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>
+          </svg>
+          <span>Batas Uang Saku Dompet (Safety Cap)</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Maksimal Anggaran Belanja (Rp)</label>
+          <input type="number" class="form-input" id="settingBudgetInput" value="350000" step="5000">
+        </div>
+        <button type="button" class="btn-chip btn-chip-primary" onclick="updateBudgetLimitSetting()">
+          Perbarui Batas Dompet
+        </button>
+      </div>
+
+      <!-- Cloud Database Firebase Integration (Modul P12 Bagian 9) -->
+      <div class="settings-section-card">
+        <div class="settings-heading">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+          </svg>
+          <span>Cloud Database Firebase (SRS F-06 / Bagian 9)</span>
+        </div>
+        <p style="font-size: 11px; color: var(--slate-600); margin-bottom: 10px; line-height: 1.5;">
+          Hubungkan project ke <strong>Firebase Firestore</strong> agar data perbandingan harga dan batas dompet tersinkronisasi ke cloud sesuai panduan Modul Bagian 9.
+        </p>
+
+        <div id="firebaseStatusIndicator" class="firebase-status-chip firebase-offline">
+          ⚪ Offline (Penyimpanan Lokal Browser Aktif)
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Konfigurasi Firebase Console (const firebaseConfig = { ... })</label>
+          <textarea id="firebaseConfigInput" class="form-input" style="height: 90px; font-family: var(--font-mono); font-size: 10px; padding: 8px;" placeholder='{ "apiKey": "AIzaSy...", "projectId": "proyek-kamu" }'></textarea>
+        </div>
+
+        <button type="button" class="btn-chip btn-chip-primary" onclick="saveFirebaseConfigFromInput()">
+          Hubungkan Firebase Cloud
+        </button>
+      </div>
+
+      <!-- About App -->
+      <div class="settings-section-card" style="text-align: center; font-size: 11px; color: var(--slate-500);">
+        <strong>Smart Grocery Truckerr v1.0.0</strong><br>
+        Dibuat untuk Praktik &amp; Evaluasi Siswa Kelas 12<br>
+        ICT Codehub • SMA Mutiara Bangsa 2 Tangerang
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         FLOATING CHECKOUT BAR (TAB BELANJA ACTIVE)
+         ========================================================== -->
+    <div class="floating-checkout-strip" id="floatingCheckoutStrip">
+      <div class="checkout-summary-col">
+        <small id="floatingItemsCount">0 Barang</small>
+        <div class="total-cash" id="floatingTotalCash">Rp 0</div>
+      </div>
+      <button type="button" class="btn-primary-block" onclick="openReceiptModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M4 12V4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"/><path d="M2 18h12"/>
+        </svg>
+        Selesai &amp; Struk
+      </button>
+    </div>
+
+    <!-- ==========================================================
+         BOTTOM NAVIGATION BAR (FLOATING NATIVE TOUCH)
+         ========================================================== -->
+    <nav class="bottom-nav">
+      <button type="button" class="nav-tab-btn active" data-target="tabBelanja" onclick="switchTab('tabBelanja')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>
+          <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+        </svg>
+        <span>Belanja</span>
+      </button>
+
+      <button type="button" class="nav-tab-btn" data-target="tabPromo" onclick="switchTab('tabPromo')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 5 5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>
+        </svg>
+        <span>Kalkulator</span>
+      </button>
+
+      <button type="button" class="nav-tab-btn" data-target="tabRiwayat" onclick="switchTab('tabRiwayat')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1Z"/>
+          <path d="M16 8h-8"/><path d="M16 12h-8"/><path d="M10 16h-2"/>
+        </svg>
+        <span>Riwayat</span>
+      </button>
+
+      <button type="button" class="nav-tab-btn" data-target="tabPengaturan" onclick="switchTab('tabPengaturan')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        <span>Anggaran</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ==========================================================
+       MODAL 1: TAMBAH / EDIT BARANG (F-01, F-03, F-04)
+       ========================================================== -->
+  <div class="modal-overlay" id="itemModalOverlay">
+    <div class="modal-sheet">
+      <div class="modal-handle-bar"></div>
+      <div class="modal-header-row">
+        <h3 class="modal-title" id="modalItemTitle">Tambah Barang Belanja</h3>
+        <button type="button" class="btn-close-modal" onclick="closeItemModal()">✕</button>
+      </div>
+
+      <form id="itemForm">
+        <input type="hidden" id="editItemId">
+
+        <div class="form-group">
+          <label class="form-label">Nama Produk / Barang *</label>
+          <input type="text" class="form-input" id="formItemName" required placeholder="Contoh: Beras Ramos, Minyak Goreng">
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Kategori</label>
+            <select class="form-select" id="formItemCategory">
+              <option value="Bahan Pokok">Bahan Pokok</option>
+              <option value="Bumbu Dapur">Bumbu Dapur</option>
+              <option value="Perawatan Diri">Perawatan Diri &amp; Mandi</option>
+              <option value="Peralatan Rumah">Peralatan Rumah</option>
+              <option value="Camilan &amp; Minuman">Camilan &amp; Minuman</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Satuan Ukuran</label>
+            <select class="form-select" id="formItemUnit">
+              <option value="pcs">pcs / buah</option>
+              <option value="kg">kg (Kilogram)</option>
+              <option value="liter">liter</option>
+              <option value="pack">pack</option>
+              <option value="botol">botol</option>
+              <option value="kaleng">kaleng</option>
+              <option value="gram">gram</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Jumlah Beli (Qty)</label>
+            <input type="number" class="form-input" id="formItemQty" value="1" min="1" step="1" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Harga Satuan Sekarang (Rp) *</label>
+            <input type="number" class="form-input" id="formItemPrice" required placeholder="Contoh: 43000">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Harga Bulan Lalu (Rp)</label>
+            <input type="number" class="form-input" id="formItemLastPrice" placeholder="Untuk pembanding harga">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Diskon / Promo</label>
+            <input type="text" class="form-input" id="formItemDiscount" placeholder="Contoh: 25% atau 50% + 20%">
+          </div>
+        </div>
+
+        <!-- Live Preview Calculation Box -->
+        <div class="calc-result-box" id="modalLivePreviewBox" style="margin-bottom: 16px;">
+          <!-- Live Preview Populated dynamically -->
+        </div>
+
+        <button type="submit" class="btn-primary-block" style="width: 100%;">
+          Simpan ke Daftar Belanja
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       MODAL 2: DIGITAL RECEIPT (STRUK BELANJA & WHATSAPP)
+       ========================================================== -->
+  <div class="modal-overlay" id="receiptModalOverlay">
+    <div class="modal-sheet">
+      <div class="modal-handle-bar"></div>
+      <div class="modal-header-row">
+        <h3 class="modal-title">Struk Belanja Digital Rian</h3>
+        <button type="button" class="btn-close-modal" onclick="closeReceiptModal()">✕</button>
+      </div>
+
+      <div class="digital-receipt-paper" id="digitalReceiptContent">
+        <!-- Rendered by JavaScript -->
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 14px;">
+        <button type="button" class="btn-chip" onclick="printDigitalReceipt()" style="flex: 1; justify-content: center;">
+          🖨️ Cetak / PDF
+        </button>
+        <button type="button" class="btn-chip btn-chip-primary" onclick="shareReceiptWhatsApp()" style="flex: 1; justify-content: center;">
+          💬 Kirim WhatsApp
+        </button>
+      </div>
+
+      <div style="margin-top: 10px;">
+        <button type="button" class="btn-primary-block" onclick="finalizeShoppingSession()" style="width: 100%;">
+          Simpan Selesai Belanja ke Riwayat
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Application Logic -->
+  <script src="./js/app.js"></script>
+</body>
+</html>
