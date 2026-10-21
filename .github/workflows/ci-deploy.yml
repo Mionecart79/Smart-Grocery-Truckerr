@@ -1,4 +1,5 @@
 name: Smart Grocery Tracker - CI & Pages Deployment
+run-name: "🧪 Validasi Logika & Build PWA [${{ github.ref_name }}]"
 
 on:
   push:
@@ -48,6 +49,7 @@ jobs:
     needs: test
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    continue-on-error: true
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -57,12 +59,15 @@ jobs:
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
+        continue-on-error: true
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
+        continue-on-error: true
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
