@@ -1014,9 +1014,15 @@ function finalizeShoppingSession() {
 
   appState.history.unshift(session);
   saveItemsToStorage();
+
+  // Save receipt to Firestore Cloud
+  if (typeof window !== 'undefined' && window.saveHistoryToFirestore) {
+    window.saveHistoryToFirestore(session);
+  }
+
   closeReceiptModal();
   renderHistoryList();
-  showToast('🎉 Belanjaan berhasil disimpan ke riwayat!');
+  showToast('🎉 Belanjaan berhasil disimpan ke riwayat & cloud!');
 }
 
 function renderHistoryList() {
@@ -1166,10 +1172,11 @@ function initFirebaseCloud() {
 }
 
 function syncToFirebaseCloud() {
-  if (!appState.firebaseOnline) return;
-  // If Firestore is connected, log or emit sync
-  console.log('Synchronizing state to Firebase Cloud Firestore for user:', appState.userProfile.name);
+  if (typeof window !== 'undefined' && window.syncCartToFirestore) {
+    window.syncCartToFirestore(appState.items, appState.budgetLimit, appState.userProfile.name);
+  }
 }
+
 
 // ==========================================================
 // 10. UI UTILITIES, TABS, TOAST & INITIALIZATION
