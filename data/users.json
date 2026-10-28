@@ -1,0 +1,11 @@
+[
+  {
+    "id": "user_rian_demo",
+    "username": "rian_kos",
+    "email": "rian@kos.ac.id",
+    "name": "Rian Siswa Kos",
+    "salt": "f88516084c100b78272e524b5d818138",
+    "passwordHash": "fb01e0a6055b13669b35fed5af95a92c50adb1368bd6c7139dfc2dac888cc555",
+    "createdAt": "2026-10-28T04:41:04.255Z"
+  }
+]

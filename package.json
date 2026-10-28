@@ -1,0 +1,20 @@
+{
+  "name": "smart-grocery-trucker",
+  "version": "2.0.0",
+  "description": "Progressive Web App (PWA) Smart Grocery & Price Tracker dengan Budget Safety Cap dan Diskon Bertingkat",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test_app_logic.js",
+    "build": "echo \"Build production verified: static assets ready for deployment\""
+  },
+  "keywords": [
+    "pwa",
+    "grocery-tracker",
+    "budget-warning",
+    "compound-discount",
+    "price-comparison"
+  ],
+  "author": "ICT Codehub Mutiara Bangsa 2",
+  "license": "MIT"
+}

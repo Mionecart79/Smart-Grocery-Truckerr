@@ -1,4 +1,4 @@
-const CACHE_NAME = 'smart-grocery-truckerr-v1';
+const CACHE_NAME = 'smart-grocery-trucker-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -33,10 +33,20 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  // Let API requests bypass the service worker cache
+  if (event.request.url.includes('/api/')) {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      return cachedResponse || fetch(event.request).catch(() => {
-        // Return offline fallback if needed
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request).then((networkResponse) => {
+        return networkResponse;
+      }).catch(() => {
+        // Offline fallback
         return cachedResponse;
       });
     })
