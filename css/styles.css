@@ -1,53 +1,53 @@
 /* ==========================================================
-   SMART GROCERY TRUCKER - MODERN MOBILE PWA STYLESHEET
-   Shopee-inspired Emerald & White Modern E-Commerce UI
-   Responsive for Smartphone & Desktop Devices
+   SMART GROCERY TRUCKER - ASTRO EDITION MOBILE PWA STYLESHEET
+   Astro Quick-Commerce Inspired Design (Vibrant Green & White)
+   Ergonomic for Smartphone & Desktop Devices
    ========================================================== */
 
 :root {
-  --primary-700: #047857;
-  --primary-600: #059669;
-  --primary-500: #10b981;
-  --primary-100: #d1fae5;
-  --primary-50: #ecfdf5;
+  --primary-700: #00875A;
+  --primary-600: #00A86B; /* Astro Electric Green */
+  --primary-500: #10B981;
+  --primary-100: #D1FAE5;
+  --primary-50: #ECFDF5;
 
-  --accent-600: #2563eb;
-  --accent-500: #3b82f6;
-  --accent-100: #dbeafe;
-  --accent-50: #eff6ff;
+  --accent-600: #2563EB;
+  --accent-500: #3B82F6;
+  --accent-100: #DBEAFE;
+  --accent-50: #EFF6FF;
 
-  --success-600: #059669;
-  --success-500: #10b981;
-  --success-100: #d1fae5;
-  --success-50: #ecfdf5;
+  --success-600: #00A86B;
+  --success-500: #10B981;
+  --success-100: #D1FAE5;
+  --success-50: #ECFDF5;
 
-  --warning-600: #d97706;
-  --warning-500: #f59e0b;
-  --warning-100: #fef3c7;
-  --warning-50: #fffbeb;
+  --warning-600: #D97706;
+  --warning-500: #F59E0B;
+  --warning-100: #FEF3C7;
+  --warning-50: #FFFBEB;
 
-  --danger-700: #b91c1c;
-  --danger-600: #dc2626;
-  --danger-500: #ef4444;
-  --danger-100: #fee2e2;
-  --danger-50: #fef2f2;
+  --danger-700: #B91C1C;
+  --danger-600: #DC2626;
+  --danger-500: #EF4444;
+  --danger-100: #FEE2E2;
+  --danger-50: #FEF2F2;
 
-  --slate-900: #0f172a;
-  --slate-800: #1e293b;
+  --slate-900: #0F172A;
+  --slate-800: #1E293B;
   --slate-700: #334155;
   --slate-600: #475569;
-  --slate-500: #64748b;
-  --slate-400: #94a3b8;
-  --slate-300: #cbd5e1;
-  --slate-200: #e2e8f0;
-  --slate-100: #f1f5f9;
-  --slate-50: #f8fafc;
-  --white: #ffffff;
+  --slate-500: #64748B;
+  --slate-400: #94A3B8;
+  --slate-300: #CBD5E1;
+  --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9;
+  --slate-50: #F8FAFC;
+  --white: #FFFFFF;
 
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.08);
-  --shadow-float: 0 12px 28px -4px rgba(5, 150, 105, 0.18), 0 6px 12px -4px rgba(0, 0, 0, 0.06);
+  --shadow-float: 0 12px 28px -4px rgba(0, 168, 107, 0.22), 0 6px 12px -4px rgba(0, 0, 0, 0.06);
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -88,7 +88,7 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 24px 16px;
+    padding: 20px 16px;
     background: radial-gradient(circle at top right, #d1fae5 0%, #e2e8f0 50%, #cbd5e1 100%);
   }
 }
@@ -103,21 +103,21 @@ html, body {
   flex-direction: column;
   overflow-x: hidden;
   box-shadow: var(--shadow-lg);
-  padding-bottom: 84px; /* Space for bottom nav */
+  padding-bottom: 96px; /* Space for bottom nav and floating tray */
 }
 
 @media (min-width: 500px) {
   .app-viewport {
     min-height: 900px;
     border-radius: 36px;
-    border: 8px solid #1e293b;
-    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+    border: 8px solid #0f172a;
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.28);
   }
 
   .phone-notch {
     width: 120px;
     height: 18px;
-    background: #1e293b;
+    background: #0f172a;
     border-radius: 0 0 12px 12px;
     margin: 0 auto 4px auto;
     z-index: 100;
@@ -131,7 +131,7 @@ html, body {
 }
 
 /* ==========================================================
-   APP HEADER
+   ASTRO APP HEADER & DELIVERY BAR
    ========================================================== */
 .app-header {
   position: sticky;
@@ -142,11 +142,48 @@ html, body {
   box-shadow: var(--shadow-sm);
 }
 
+.astro-delivery-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px;
+  background: linear-gradient(90deg, #0f172a, #1e293b);
+  color: #f8fafc;
+  font-size: 11px;
+}
+
+.delivery-badge-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.delivery-rocket {
+  font-size: 13px;
+}
+
+.wallet-badge-pill {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 168, 107, 0.25);
+  color: #34d399;
+  font-weight: 700;
+  font-size: 10.5px;
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wallet-badge-pill:hover {
+  background: rgba(0, 168, 107, 0.45);
+}
+
 .top-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
+  padding: 10px 14px;
 }
 
 .brand-wrapper {
@@ -164,7 +201,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 8px rgba(5, 150, 105, 0.25);
+  box-shadow: 0 4px 10px rgba(0, 168, 107, 0.35);
 }
 
 .brand-title-wrap h1 {
@@ -191,7 +228,7 @@ html, body {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .btn-icon-header {
@@ -218,32 +255,28 @@ html, body {
    SRS F-05: BUDGET SAFETY CAP HERO
    ========================================================== */
 .budget-hero-card {
-  margin: 8px 16px 10px 16px;
+  margin: 8px 14px 8px 14px;
   padding: 12px 14px;
   border-radius: var(--radius-lg);
   transition: all 0.3s ease;
   border: 1.5px solid transparent;
 }
 
-/* Safe State (< 80%) */
 .budget-hero-card.state-safe {
   background: linear-gradient(145deg, #f0fdf4, #ecfdf5);
   border-color: #a7f3d0;
 }
 
-/* Warning State (80% - 99%) */
 .budget-hero-card.state-warning {
   background: linear-gradient(145deg, #fffbeb, #fef3c7);
   border-color: #fde68a;
 }
 
-/* Cap State (100%) */
 .budget-hero-card.state-cap {
   background: linear-gradient(145deg, #fff7ed, #ffedd5);
   border-color: #fdba74;
 }
 
-/* Danger State (> 100%) */
 .budget-hero-card.state-danger {
   background: linear-gradient(145deg, #fef2f2, #fee2e2);
   border-color: #fca5a5;
@@ -264,16 +297,16 @@ html, body {
   border-radius: var(--radius-sm);
   font-size: 11.5px;
   line-height: 1.4;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .banner-safe {
-  background: rgba(16, 185, 129, 0.15);
+  background: rgba(0, 168, 107, 0.12);
   color: #065f46;
 }
 
 .banner-warning {
-  background: rgba(245, 158, 11, 0.18);
+  background: rgba(245, 158, 11, 0.16);
   color: #92400e;
 }
 
@@ -293,6 +326,17 @@ html, body {
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 6px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.edit-hint-pen {
+  font-size: 10px;
+  color: var(--primary-600);
+  font-weight: 700;
+  margin-left: 2px;
 }
 
 .metric-col small {
@@ -315,11 +359,7 @@ html, body {
   font-family: var(--font-mono);
   font-size: 15px;
   font-weight: 700;
-  color: var(--slate-600);
-}
-
-.text-right {
-  text-align: right;
+  color: var(--slate-700);
 }
 
 .budget-progress-track {
@@ -338,7 +378,7 @@ html, body {
 }
 
 .progress-safe {
-  background: linear-gradient(90deg, #10b981, #059669);
+  background: linear-gradient(90deg, #10b981, #00a86b);
 }
 
 .progress-warning {
@@ -362,26 +402,38 @@ html, body {
 }
 
 /* ==========================================================
-   QUICK TEST STRIP (DT2 1-CLICK TESTS)
+   ASTRO QUICK NOMINAL BUDGET SELECTOR STRIP
    ========================================================== */
-.quick-action-strip {
+.budget-nominal-strip {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 0 16px 10px 16px;
+  padding: 0 14px 10px 14px;
+}
+
+.nominal-strip-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--slate-600);
+  white-space: nowrap;
+}
+
+.nominal-chips-scroll {
+  display: flex;
+  gap: 5px;
   overflow-x: auto;
   scrollbar-width: none;
 }
 
-.quick-action-strip::-webkit-scrollbar {
+.nominal-chips-scroll::-webkit-scrollbar {
   display: none;
 }
 
-.btn-chip {
-  padding: 4px 10px;
+.btn-nominal-chip {
+  padding: 5px 10px;
   border-radius: var(--radius-full);
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 11.5px;
+  font-weight: 700;
   border: 1px solid var(--slate-200);
   background: var(--white);
   color: var(--slate-700);
@@ -390,19 +442,281 @@ html, body {
   transition: all 0.15s ease;
 }
 
-.btn-chip:hover {
+.btn-nominal-chip:hover {
   background: var(--slate-100);
   border-color: var(--slate-300);
 }
 
-.btn-chip-primary {
+.btn-nominal-chip.active {
   background: var(--primary-600);
   color: var(--white);
   border-color: var(--primary-600);
+  box-shadow: 0 2px 6px rgba(0, 168, 107, 0.3);
 }
 
-.btn-chip-primary:hover {
-  background: var(--primary-700);
+.btn-nominal-custom {
+  background: var(--primary-50);
+  color: var(--primary-700);
+  border-color: var(--primary-100);
+}
+
+/* ==========================================================
+   ASTRO BANNER & DASHBOARD GREETING
+   ========================================================== */
+.astro-banner-card {
+  background: linear-gradient(135deg, #00A86B, #00875A);
+  color: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 20px -4px rgba(0, 168, 107, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-badge-pill {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.astro-banner-card h3 {
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.astro-banner-card p {
+  font-size: 11.5px;
+  opacity: 0.95;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.btn-banner-action {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: var(--white);
+  color: var(--primary-700);
+  font-weight: 800;
+  font-size: 11.5px;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease;
+}
+
+.btn-banner-action:hover {
+  transform: translateY(-1px);
+}
+
+.dashboard-greeting-card {
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.greeting-content h2 {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--slate-900);
+  line-height: 1.25;
+}
+
+.greeting-content p {
+  font-size: 12px;
+  color: var(--slate-500);
+  margin-top: 2px;
+}
+
+.btn-atur-dompet-shortcut {
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: var(--primary-50);
+  color: var(--primary-700);
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid var(--primary-100);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-atur-dompet-shortcut:hover {
+  background: var(--primary-100);
+}
+
+/* ==========================================================
+   METRIC STAT CARDS
+   ========================================================== */
+.dashboard-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.metric-stat-card {
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.stat-header small {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--slate-500);
+  text-transform: uppercase;
+}
+
+.stat-icon-wrap {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.stat-number {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--slate-900);
+  line-height: 1.2;
+}
+
+.stat-desc {
+  font-size: 11px;
+  color: var(--slate-500);
+  margin-top: 2px;
+}
+
+/* ==========================================================
+   FLUCTUATION BADGES ROW
+   ========================================================== */
+.fluctuation-badges-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.fluc-pill {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  font-size: 11.5px;
+}
+
+.fluc-pill strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.fluc-pill small {
+  font-size: 10.5px;
+  opacity: 0.85;
+}
+
+.fluc-arrow {
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.pill-up {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.pill-down {
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.pill-equal {
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+/* ==========================================================
+   DASHBOARD QUICK ACTIONS
+   ========================================================== */
+.dashboard-quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.action-tile-btn {
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s ease;
+}
+
+.action-tile-btn:hover {
+  border-color: var(--primary-500);
+  transform: translateY(-1px);
+}
+
+.action-tile-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.action-tile-btn strong {
+  font-size: 13px;
+  color: var(--slate-900);
+}
+
+.action-tile-btn small {
+  font-size: 11px;
+  color: var(--slate-500);
 }
 
 /* ==========================================================
@@ -410,7 +724,7 @@ html, body {
    ========================================================== */
 .tab-view {
   display: none;
-  padding: 12px 16px 24px 16px;
+  padding: 12px 14px 24px 14px;
   animation: fadeIn 0.2s ease;
 }
 
@@ -426,12 +740,12 @@ html, body {
 /* ==========================================================
    LANDING PAGE (VIEW 0)
    ========================================================== */
-.landing-hero-card {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+.landing-hero-card.astro-hero-bg {
+  background: linear-gradient(135deg, #00A86B 0%, #00875A 100%);
   color: var(--white);
   padding: 24px 18px;
   border-radius: var(--radius-xl);
-  box-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.4);
+  box-shadow: 0 10px 25px -5px rgba(0, 168, 107, 0.4);
   text-align: center;
   margin-bottom: 16px;
 }
@@ -515,17 +829,17 @@ html, body {
   width: 100%;
   padding: 8px 12px;
   border-radius: var(--radius-md);
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.18);
   color: #a7f3d0;
   font-size: 11.5px;
-  font-weight: 600;
+  font-weight: 700;
   border: none;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .btn-landing-demo:hover {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .landing-features-grid {
@@ -570,282 +884,6 @@ html, body {
   line-height: 1.4;
 }
 
-.shopee-card-banner {
-  background: var(--white);
-  border-left: 4px solid var(--primary-600);
-  border-radius: var(--radius-md);
-  padding: 12px 14px;
-  box-shadow: var(--shadow-sm);
-}
-
-.shopee-badge {
-  display: inline-block;
-  font-size: 10.5px;
-  font-weight: 700;
-  color: var(--primary-700);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* ==========================================================
-   DASHBOARD (TAB 1)
-   ========================================================== */
-.dashboard-greeting-card {
-  background: var(--white);
-  border: 1px solid var(--slate-200);
-  border-radius: var(--radius-lg);
-  padding: 14px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-  box-shadow: var(--shadow-sm);
-}
-
-.greeting-content h2 {
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--slate-900);
-  line-height: 1.25;
-}
-
-.greeting-content p {
-  font-size: 12px;
-  color: var(--slate-500);
-  margin-top: 2px;
-}
-
-.greeting-pill-badge {
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  background: var(--primary-50);
-  color: var(--primary-700);
-  font-size: 11px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.dashboard-metrics-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.metric-stat-card {
-  background: var(--white);
-  border: 1px solid var(--slate-200);
-  border-radius: var(--radius-lg);
-  padding: 12px 14px;
-  box-shadow: var(--shadow-sm);
-}
-
-.stat-header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 6px;
-}
-
-.stat-header small {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--slate-500);
-  text-transform: uppercase;
-}
-
-.stat-icon-wrap {
-  width: 24px;
-  height: 24px;
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-}
-
-.stat-number {
-  font-family: var(--font-mono);
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--slate-900);
-  line-height: 1.2;
-}
-
-.stat-desc {
-  font-size: 11px;
-  color: var(--slate-500);
-  margin-top: 3px;
-}
-
-.fluctuation-badges-row {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-.fluc-pill {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  border-radius: var(--radius-md);
-  font-size: 11.5px;
-}
-
-.fluc-pill strong {
-  display: block;
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 1.1;
-}
-
-.fluc-pill small {
-  font-size: 10.5px;
-  opacity: 0.85;
-}
-
-.fluc-arrow {
-  font-size: 18px;
-  font-weight: 900;
-  line-height: 1;
-}
-
-.pill-up {
-  background: #fef2f2;
-  color: #b91c1c;
-  border: 1px solid #fecaca;
-}
-
-.pill-down {
-  background: #f0fdf4;
-  color: #15803d;
-  border: 1px solid #bbf7d0;
-}
-
-.pill-equal {
-  background: #f8fafc;
-  color: #475569;
-  border: 1px solid #e2e8f0;
-}
-
-.dashboard-quick-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.action-tile-btn {
-  background: var(--white);
-  border: 1px solid var(--slate-200);
-  border-radius: var(--radius-lg);
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  cursor: pointer;
-  text-align: left;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.15s ease;
-}
-
-.action-tile-btn:hover {
-  border-color: var(--primary-500);
-  transform: translateY(-1px);
-}
-
-.action-tile-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  margin-bottom: 2px;
-}
-
-.action-tile-btn strong {
-  font-size: 13px;
-  color: var(--slate-900);
-}
-
-.action-tile-btn small {
-  font-size: 11px;
-  color: var(--slate-500);
-}
-
-/* ==========================================================
-   CONTENT CARDS (COMMON)
-   ========================================================== */
-.content-card {
-  background: var(--white);
-  border: 1px solid var(--slate-200);
-  border-radius: var(--radius-lg);
-  padding: 14px 16px;
-  margin-bottom: 14px;
-  box-shadow: var(--shadow-sm);
-}
-
-.card-title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 8px;
-}
-
-.card-title-wrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.card-icon-pill {
-  font-size: 18px;
-}
-
-.card-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--slate-900);
-  line-height: 1.25;
-}
-
-.card-subtitle {
-  font-size: 11.5px;
-  color: var(--slate-500);
-}
-
-.btn-text-link {
-  background: none;
-  border: none;
-  color: var(--primary-600);
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.content-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.content-view-title {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--slate-900);
-}
-
-.content-view-subtitle {
-  font-size: 11.5px;
-  color: var(--slate-500);
-}
-
 /* ==========================================================
    DAFTAR BELANJA (TAB 2)
    ========================================================== */
@@ -854,7 +892,7 @@ html, body {
   gap: 6px;
   overflow-x: auto;
   scrollbar-width: none;
-  padding-bottom: 8px;
+  padding-bottom: 6px;
   margin-bottom: 8px;
 }
 
@@ -866,7 +904,7 @@ html, body {
   padding: 6px 12px;
   border-radius: var(--radius-full);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   background: var(--white);
   border: 1px solid var(--slate-200);
   color: var(--slate-700);
@@ -902,7 +940,7 @@ html, body {
 .toolbar-row {
   display: flex;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .search-input-box {
@@ -949,6 +987,35 @@ html, body {
 }
 
 .btn-add-item:hover {
+  background: var(--primary-700);
+}
+
+.cart-header-action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--slate-200);
+  font-size: 12px;
+  color: var(--slate-600);
+}
+
+.btn-checkout-astro {
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background: var(--primary-600);
+  color: var(--white);
+  font-size: 11.5px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-checkout-astro:hover {
   background: var(--primary-700);
 }
 
@@ -1164,6 +1231,233 @@ html, body {
 .trend-equal {
   background: #f1f5f9;
   color: #64748b;
+}
+
+/* ==========================================================
+   ASTRO FLOATING BOTTOM CART TRAY
+   ========================================================== */
+.astro-floating-cart-bar {
+  position: absolute;
+  bottom: 70px;
+  left: 12px;
+  right: 12px;
+  background: #0f172a;
+  color: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.35);
+  cursor: pointer;
+  z-index: 45;
+  animation: slideUpTray 0.25s ease;
+}
+
+@keyframes slideUpTray {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.astro-cart-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.astro-cart-count-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  background: var(--primary-600);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.astro-cart-total-text {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.astro-cart-subtext {
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.astro-cart-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #34d399;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ==========================================================
+   RIWAYAT BELANJA (TAB 5) - ASTRO ORDER HISTORY
+   ========================================================== */
+.history-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.history-order-card {
+  background: var(--white);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--slate-100);
+}
+
+.order-code-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary-700);
+  background: var(--primary-50);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.order-date-text {
+  font-size: 11px;
+  color: var(--slate-500);
+}
+
+.order-store-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--slate-800);
+  margin-top: 2px;
+}
+
+.history-items-summary {
+  font-size: 12px;
+  color: var(--slate-600);
+  line-height: 1.4;
+  background: var(--slate-50);
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+}
+
+.history-bill-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.history-bill-row strong {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--slate-900);
+}
+
+.history-actions-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.btn-reorder-astro {
+  flex: 2;
+  padding: 7px 12px;
+  border-radius: var(--radius-md);
+  background: var(--primary-600);
+  color: var(--white);
+  font-size: 11.5px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.btn-reorder-astro:hover {
+  background: var(--primary-700);
+}
+
+.btn-receipt-history {
+  flex: 1;
+  padding: 7px 10px;
+  border-radius: var(--radius-md);
+  background: var(--slate-100);
+  color: var(--slate-700);
+  font-size: 11.5px;
+  font-weight: 600;
+  border: 1px solid var(--slate-200);
+  cursor: pointer;
+}
+
+.btn-sm-danger {
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background: #fef2f2;
+  color: #dc2626;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid #fecaca;
+  cursor: pointer;
+}
+
+/* ==========================================================
+   MODAL ATUR DOMPET SECARA MANUAL & PILIH NOMINAL
+   ========================================================== */
+.nominal-preset-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.btn-preset-pill {
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--slate-200);
+  background: var(--slate-50);
+  color: var(--slate-800);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-preset-pill:hover {
+  border-color: var(--primary-500);
+  background: var(--primary-50);
+  color: var(--primary-700);
+}
+
+.budget-modal-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--slate-600);
+  background: var(--slate-50);
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  margin-top: 10px;
 }
 
 /* ==========================================================
@@ -1489,73 +1783,71 @@ html, body {
 }
 
 /* ==========================================================
-   RIWAYAT BELANJA (TAB 5)
+   CONTENT CARDS
    ========================================================== */
-.history-card-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.history-card {
+.content-card {
   background: var(--white);
   border: 1px solid var(--slate-200);
   border-radius: var(--radius-lg);
-  padding: 12px 14px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
   box-shadow: var(--shadow-sm);
 }
 
-.history-card-header {
+.card-title-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.history-card-header strong {
-  font-size: 13.5px;
+.card-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-icon-pill {
+  font-size: 18px;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 700;
   color: var(--slate-900);
+  line-height: 1.25;
 }
 
-.history-card-header small {
-  font-size: 11px;
+.card-subtitle {
+  font-size: 11.5px;
   color: var(--slate-500);
 }
 
-.history-total-row {
+.btn-text-link {
+  background: none;
+  border: none;
+  color: var(--primary-600);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.content-header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 0;
-  font-size: 12px;
+  margin-bottom: 12px;
 }
 
-.history-actions-row {
-  display: flex;
-  gap: 6px;
-  margin-top: 8px;
+.content-view-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--slate-900);
 }
 
-.btn-sm-outline {
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--slate-200);
-  background: var(--white);
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--slate-700);
-  cursor: pointer;
-}
-
-.btn-sm-primary {
-  padding: 6px 12px;
-  border-radius: var(--radius-md);
-  background: var(--primary-600);
-  color: var(--white);
-  font-size: 12px;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
+.content-view-subtitle {
+  font-size: 11.5px;
+  color: var(--slate-500);
 }
 
 /* ==========================================================
@@ -1707,7 +1999,7 @@ html, body {
 
 .nav-label {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .nav-icon-badge-wrap {
@@ -1776,6 +2068,12 @@ html, body {
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 14px;
+}
+
+.modal-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .modal-title {
@@ -1995,6 +2293,18 @@ html, body {
   cursor: pointer;
 }
 
+.btn-primary {
+  flex: 1;
+  padding: 9px 12px;
+  border-radius: var(--radius-md);
+  background: var(--primary-600);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 12.5px;
+  border: none;
+  cursor: pointer;
+}
+
 .btn-danger-confirm {
   flex: 1;
   padding: 9px 12px;
@@ -2046,18 +2356,6 @@ html, body {
   gap: 8px;
 }
 
-.btn-primary {
-  flex: 1;
-  padding: 9px 12px;
-  border-radius: var(--radius-md);
-  background: var(--primary-600);
-  color: var(--white);
-  font-weight: 700;
-  font-size: 12.5px;
-  border: none;
-  cursor: pointer;
-}
-
 /* ==========================================================
    TOAST NOTIFICATIONS
    ========================================================== */
@@ -2092,7 +2390,7 @@ html, body {
 }
 
 .toast-success {
-  background: #065f46;
+  background: #00875A;
   border-left: 4px solid #10b981;
 }
 
