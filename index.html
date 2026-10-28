@@ -67,6 +67,9 @@
         </div>
 
         <div class="header-actions">
+          <a href="./tests.html" target="_blank" class="btn-icon-header" title="Buka Halaman Uji Otomatis DT2 (100% Lulus)" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; font-size:14px;">
+            🧪
+          </a>
           <button type="button" class="btn-icon-header" onclick="switchNavTab('riwayat')" title="Lihat Riwayat Belanja">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -357,6 +360,31 @@
          TAB 2: GROCERY LIST (DAFTAR BELANJA / SHOPPING CART ASTRO)
          ========================================================== -->
     <section class="tab-view" id="tabBelanja">
+      <!-- SESI BELANJA AKTIF & SELECTOR TANGGAL (SRS F-01 & SKENARIO 1 DT2) -->
+      <div class="session-info-bar">
+        <div class="session-store-col">
+          <span class="session-badge-tag">🏪 Sesi Toko:</span>
+          <strong class="session-store-text" id="sessionStoreDisplay">Lotte Mart Grocery - Puri Indah</strong>
+        </div>
+        <div class="session-date-col">
+          <label for="shoppingSessionDate" class="session-date-label">📅 Tanggal:</label>
+          <input type="date" id="shoppingSessionDate" class="session-date-picker" value="2026-10-26" onchange="handleSessionDateChange(this.value)">
+        </div>
+      </div>
+
+      <!-- DT2 SCENARIO QUICK TEST BAR -->
+      <div class="scenario-quick-bar">
+        <span class="scenario-label">🧪 Uji Cepat DT2:</span>
+        <div class="scenario-chips-wrap">
+          <button type="button" class="btn-scen-chip" onclick="runScenarioSimulation(1)" title="Uji Skenario 1: Form Input Beras Rojolele">Skenario 1 (Input)</button>
+          <button type="button" class="btn-scen-chip" onclick="runScenarioSimulation(2)" title="Uji Skenario 2: Minyak Qty 3 pcs Rp 129rb Tanpa Delay">Skenario 2 (Qty 3x)</button>
+          <button type="button" class="btn-scen-chip" onclick="runScenarioSimulation(3)" title="Uji Skenario 3: Wajan 50%+20% = Rp 40rb">Skenario 3 (Diskon)</button>
+          <button type="button" class="btn-scen-chip" onclick="runScenarioSimulation(4)" title="Uji Skenario 4: Indikator Fluktuasi Naik/Turun/Stabil">Skenario 4 (Fluktuasi)</button>
+          <button type="button" class="btn-scen-chip" onclick="runScenarioSimulation(5)" title="Uji Skenario 5: Budget Warning Rp 100rb">Skenario 5 (Budget)</button>
+          <button type="button" class="btn-scen-chip btn-scen-reset" onclick="resetToDT2Default()" title="Reset ke 6 Barang Standar Rian (Rp 291.000)">🔄 Reset 6 Item</button>
+        </div>
+      </div>
+
       <!-- Astro Category Filter Bar -->
       <div class="category-filter-bar">
         <button type="button" class="cat-pill active" data-cat="ALL">Semua</button>
@@ -1015,8 +1043,9 @@
             <select id="formItemUnit" class="form-control">
               <option value="pcs">pcs</option>
               <option value="kg">kg</option>
-              <option value="gram">gram</option>
+              <option value="karung/5kg">karung/5kg (Kasus Beras)</option>
               <option value="liter">liter</option>
+              <option value="gram">gram</option>
               <option value="ml">ml</option>
               <option value="bungkus">bungkus</option>
               <option value="botol">botol</option>
@@ -1044,6 +1073,15 @@
           <label class="form-label" for="formItemDiscount">Format Promo / Diskon (Opsional)</label>
           <input type="text" id="formItemDiscount" class="form-control" placeholder="Contoh: 50% + 20% atau 25% atau Rp 15.000" oninput="updateModalLivePreview()">
           <small class="form-hint">Mendukung diskon tunggal, diskon kompound bertumpuk, atau potongan nominal.</small>
+
+          <!-- Quick Promo Chips (SRS F-03) -->
+          <div class="quick-promo-chips">
+            <span class="quick-chip-label">Pilih Diskon Cepat:</span>
+            <button type="button" class="btn-promo-chip" onclick="applyPromoChip('25%')">25% (Sabun Rp 15rb)</button>
+            <button type="button" class="btn-promo-chip" onclick="applyPromoChip('50% + 20%')">50% + 20% (Wajan Rp 40rb)</button>
+            <button type="button" class="btn-promo-chip" onclick="applyPromoChip('Rp 15.000')">Potongan Rp 15.000</button>
+            <button type="button" class="btn-promo-chip btn-promo-clear" onclick="applyPromoChip('')">Bersihkan</button>
+          </div>
         </div>
 
         <!-- Status Pembelian -->

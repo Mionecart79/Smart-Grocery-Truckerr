@@ -18,6 +18,8 @@ const DEFAULT_BUDGET = 350000;
 let currentUser = null;
 let cartItems = [];
 let budgetLimit = DEFAULT_BUDGET;
+let sessionStore = 'Lotte Mart Grocery - Puri Indah';
+let sessionDate = '2026-10-26';
 let shoppingHistory = [];
 let priceLogs = [];
 let activeCategory = 'ALL';
@@ -31,7 +33,7 @@ const DEFAULT_SHOPPING_ITEMS = [
     id: 'astro_item_1',
     name: 'Minyak Goreng 2L Pouch',
     category: 'Bahan Pokok',
-    store: 'Lotte Mart - Puri Indah',
+    store: 'Lotte Mart Grocery - Puri Indah',
     qty: 3,
     unit: 'liter',
     price: 43000,
@@ -43,7 +45,7 @@ const DEFAULT_SHOPPING_ITEMS = [
     id: 'astro_item_2',
     name: 'Beras Ramos Super 5kg',
     category: 'Bahan Pokok',
-    store: 'Lotte Mart - Puri Indah',
+    store: 'Lotte Mart Grocery - Puri Indah',
     qty: 1,
     unit: 'kg',
     price: 74000,
@@ -55,7 +57,7 @@ const DEFAULT_SHOPPING_ITEMS = [
     id: 'astro_item_3',
     name: 'Telur Ayam Negeri Fresh 1kg',
     category: 'Bahan Pokok',
-    store: 'Lotte Mart - Puri Indah',
+    store: 'Lotte Mart Grocery - Puri Indah',
     qty: 1,
     unit: 'kg',
     price: 28000,
@@ -67,7 +69,7 @@ const DEFAULT_SHOPPING_ITEMS = [
     id: 'astro_item_4',
     name: 'Garam Beryodium Dapur 500g',
     category: 'Bumbu Dapur',
-    store: 'Lotte Mart - Puri Indah',
+    store: 'Lotte Mart Grocery - Puri Indah',
     qty: 1,
     unit: 'bungkus',
     price: 5000,
@@ -79,7 +81,7 @@ const DEFAULT_SHOPPING_ITEMS = [
     id: 'astro_item_5',
     name: 'Sabun Mandi Cair Botol 450ml',
     category: 'Perawatan Diri',
-    store: 'Lotte Mart - Puri Indah',
+    store: 'Lotte Mart Grocery - Puri Indah',
     qty: 1,
     unit: 'botol',
     price: 20000,
@@ -91,7 +93,7 @@ const DEFAULT_SHOPPING_ITEMS = [
     id: 'astro_item_6',
     name: 'Wajan Teflon Anti Lengket 24cm',
     category: 'Peralatan Rumah',
-    store: 'Lotte Mart - Puri Indah',
+    store: 'Lotte Mart Grocery - Puri Indah',
     qty: 1,
     unit: 'pcs',
     price: 100000,
@@ -103,14 +105,14 @@ const DEFAULT_SHOPPING_ITEMS = [
 
 // Default Price Tracker Observations (Supermarket & Traditional Market)
 const DEFAULT_PRICE_LOGS = [
-  { id: 'pl_1', itemName: 'Beras Ramos 5kg', store: 'Lotte Mart - Puri Indah', location: 'Puri Indah', price: 74000, unit: 'kg', priceLastMonth: 68000, date: '2026-10-26', notes: 'Harga naik dibanding bulan lalu' },
+  { id: 'pl_1', itemName: 'Beras Ramos 5kg', store: 'Lotte Mart Grocery - Puri Indah', location: 'Puri Indah', price: 74000, unit: 'kg', priceLastMonth: 68000, date: '2026-10-26', notes: 'Harga naik dibanding bulan lalu' },
   { id: 'pl_2', itemName: 'Beras Ramos 5kg', store: 'Superindo', location: 'Meruya', price: 72500, unit: 'kg', priceLastMonth: 71000, date: '2026-10-25', notes: 'Selisih lebih murah' },
   { id: 'pl_3', itemName: 'Beras Ramos 5kg', store: 'Pasar Tradisional Anyar', location: 'Tangerang', price: 70000, unit: 'kg', priceLastMonth: 69000, date: '2026-10-27', notes: 'Paling hemat' },
-  { id: 'pl_4', itemName: 'Minyak Goreng 2L', store: 'Lotte Mart - Puri Indah', location: 'Puri Indah', price: 43000, unit: 'liter', priceLastMonth: 43000, date: '2026-10-26', notes: 'Harga stabil' },
+  { id: 'pl_4', itemName: 'Minyak Goreng 2L', store: 'Lotte Mart Grocery - Puri Indah', location: 'Puri Indah', price: 43000, unit: 'liter', priceLastMonth: 43000, date: '2026-10-26', notes: 'Harga stabil' },
   { id: 'pl_5', itemName: 'Minyak Goreng 2L', store: 'Superindo', location: 'Meruya', price: 41500, unit: 'liter', priceLastMonth: 42000, date: '2026-10-24', notes: 'Promo akhir pekan' },
-  { id: 'pl_6', itemName: 'Telur Ayam 1kg', store: 'Lotte Mart - Puri Indah', location: 'Puri Indah', price: 28000, unit: 'kg', priceLastMonth: 32000, date: '2026-10-26', notes: 'Turun harga hemat Rp 4.000' },
+  { id: 'pl_6', itemName: 'Telur Ayam 1kg', store: 'Lotte Mart Grocery - Puri Indah', location: 'Puri Indah', price: 28000, unit: 'kg', priceLastMonth: 32000, date: '2026-10-26', notes: 'Turun harga hemat Rp 4.000' },
   { id: 'pl_7', itemName: 'Telur Ayam 1kg', store: 'Pasar Tradisional Anyar', location: 'Tangerang', price: 27000, unit: 'kg', priceLastMonth: 30000, date: '2026-10-27', notes: 'Stok lokal melimpah' },
-  { id: 'pl_8', itemName: 'Garam Dapur 500g', store: 'Lotte Mart - Puri Indah', location: 'Puri Indah', price: 5000, unit: 'bungkus', priceLastMonth: 5000, date: '2026-10-26', notes: 'Harga stabil' }
+  { id: 'pl_8', itemName: 'Garam Dapur 500g', store: 'Lotte Mart Grocery - Puri Indah', location: 'Puri Indah', price: 5000, unit: 'bungkus', priceLastMonth: 5000, date: '2026-10-26', notes: 'Harga stabil' }
 ];
 
 // Sample Preloaded History for Immediate Demo & Exploration
@@ -128,7 +130,7 @@ const DEFAULT_INITIAL_HISTORY = [
     remaining: 164000,
     totalSavings: 0,
     itemsCount: 4,
-    store: 'Lotte Mart - Puri Indah'
+    store: 'Lotte Mart Grocery - Puri Indah'
   }
 ];
 
@@ -331,6 +333,16 @@ function loadUserState() {
   const savedPriceLogs = localStorage.getItem(priceKey);
   priceLogs = savedPriceLogs ? JSON.parse(savedPriceLogs) : JSON.parse(JSON.stringify(DEFAULT_PRICE_LOGS));
 
+  // Load session store & date (SRS F-01)
+  const savedStore = localStorage.getItem(getUserStorageKey('session_store'));
+  if (savedStore) sessionStore = savedStore;
+  const savedDate = localStorage.getItem(getUserStorageKey('session_date'));
+  if (savedDate) sessionDate = savedDate;
+  const sessionDateEl = document.getElementById('shoppingSessionDate');
+  if (sessionDateEl) sessionDateEl.value = sessionDate;
+  const sessionStoreEl = document.getElementById('sessionStoreDisplay');
+  if (sessionStoreEl) sessionStoreEl.textContent = sessionStore;
+
   updateUserProfileUI();
   updateBudgetChipsActiveState();
 }
@@ -341,6 +353,8 @@ function saveUserState() {
   localStorage.setItem(getUserStorageKey('budget_limit'), String(budgetLimit));
   localStorage.setItem(getUserStorageKey('history'), JSON.stringify(shoppingHistory));
   localStorage.setItem(getUserStorageKey('price_logs'), JSON.stringify(priceLogs));
+  localStorage.setItem(getUserStorageKey('session_store'), sessionStore);
+  localStorage.setItem(getUserStorageKey('session_date'), sessionDate);
 
   if (currentUser.id && !currentUser.isDemo) {
     fetch('/api/data', {
@@ -551,7 +565,7 @@ function updateBudgetSafetyCap() {
       alertIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
     }
     if (alertText) {
-      alertText.innerHTML = `<strong>BAHAYA OVERBUDGET:</strong> Total belanja melebihi batas uang tunai! Kurangi kuantitas atau tunda pembelian barang sekunder.`;
+      alertText.innerHTML = `<strong>BAHAYA OVERBUDGET:</strong> Total belanja melebihi batas saldo dompet! Kurangi kuantitas atau batalkan barang sekunder.`;
     }
   } else if (pct === 100) {
     if (heroCard) heroCard.className = 'budget-hero-card state-cap';
@@ -571,7 +585,7 @@ function updateBudgetSafetyCap() {
       alertIcon.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
     }
     if (alertText) {
-      alertText.innerHTML = `<strong>Peringatan Waspada (&ge; 80%):</strong> Total belanja sudah mencapai ${pct.toFixed(1)}% dari dompet. Periksa kembali keranjang Anda.`;
+      alertText.innerHTML = `<strong>Peringatan Waspada:</strong> Total belanja sudah mencapai ${pct.toFixed(1)}% dari batas saldo dompet. Periksa kembali keranjang Anda.`;
     }
   } else {
     if (heroCard) heroCard.className = 'budget-hero-card state-safe';
@@ -721,7 +735,7 @@ function renderItemsList() {
           <!-- Stepper Quantity with Instant Reactivity (SRS F-02) -->
           <div class="stepper-control">
             <button type="button" class="btn-step" onclick="changeQty('${item.id}', -1)" title="Kurang 1">−</button>
-            <span class="stepper-qty">${qty}</span>
+            <input type="number" class="stepper-input" value="${qty}" min="1" max="999" inputmode="numeric" oninput="setDirectQty('${item.id}', this.value)" title="Ketik angka kuantitas langsung tanpa delay">
             <span class="stepper-unit">${escapeHtml(item.unit || 'pcs')}</span>
             <button type="button" class="btn-step" onclick="changeQty('${item.id}', 1)" title="Tambah 1">+</button>
           </div>
@@ -752,6 +766,27 @@ function changeQty(itemId, delta) {
   item.qty = newQty;
   saveUserState();
   renderItemsList();
+  updateBudgetSafetyCap();
+}
+
+function setDirectQty(itemId, val) {
+  const item = cartItems.find(i => i.id === itemId);
+  if (!item) return;
+
+  const num = parseInt(val, 10);
+  if (isNaN(num) || num < 1) return;
+
+  item.qty = num;
+  saveUserState();
+
+  // Instant update row subtotal in place without losing focus or cursor in input
+  const discInfo = calculateCompoundDiscount(item.price, item.discountInput);
+  const subtotal = discInfo.unitPriceFinal * item.qty;
+  const card = document.getElementById(`card_${item.id}`);
+  if (card) {
+    const subtotalEl = card.querySelector('.item-subtotal');
+    if (subtotalEl) subtotalEl.textContent = formatRupiah(subtotal);
+  }
   updateBudgetSafetyCap();
 }
 
@@ -804,7 +839,7 @@ function openAddItemModal() {
   document.getElementById('itemModalTitle').textContent = 'Tambah Belanjaan Baru';
   document.getElementById('formItemName').value = '';
   document.getElementById('formItemCategory').value = 'Bahan Pokok';
-  document.getElementById('formItemStore').value = 'Lotte Mart - Puri Indah';
+  document.getElementById('formItemStore').value = sessionStore || 'Lotte Mart Grocery - Puri Indah';
   document.getElementById('formItemQty').value = '1';
   document.getElementById('formItemUnit').value = 'pcs';
   document.getElementById('formItemPrice').value = '';
@@ -825,7 +860,7 @@ function openEditModal(itemId) {
   document.getElementById('itemModalTitle').textContent = 'Edit Belanjaan';
   document.getElementById('formItemName').value = item.name;
   document.getElementById('formItemCategory').value = item.category || 'Bahan Pokok';
-  document.getElementById('formItemStore').value = item.store || 'Lotte Mart - Puri Indah';
+  document.getElementById('formItemStore').value = item.store || sessionStore || 'Lotte Mart Grocery - Puri Indah';
   document.getElementById('formItemQty').value = item.qty || 1;
   document.getElementById('formItemUnit').value = item.unit || 'pcs';
   document.getElementById('formItemPrice').value = item.price || 0;
@@ -841,6 +876,33 @@ function openEditModal(itemId) {
 function closeItemModal() {
   const modal = document.getElementById('itemModal');
   if (modal) modal.classList.remove('open');
+}
+
+function applyPromoChip(promoStr) {
+  const input = document.getElementById('formItemDiscount');
+  if (input) {
+    input.value = promoStr;
+    updateModalLivePreview();
+  }
+}
+
+function handleSessionDateChange(val) {
+  if (val) {
+    sessionDate = val;
+    saveUserState();
+    showToast(`📅 Tanggal sesi belanja disetel ke ${val}`, 'info');
+  }
+}
+
+function handleSessionStoreChange(val) {
+  if (val) {
+    sessionStore = val;
+    const disp = document.getElementById('sessionStoreDisplay');
+    if (disp) disp.textContent = val;
+    saveUserState();
+    renderItemsList();
+    showToast(`🏪 Toko belanja aktif disetel ke ${val}`, 'info');
+  }
 }
 
 function updateModalLivePreview() {
@@ -879,15 +941,30 @@ function saveItemForm(e) {
   const store = document.getElementById('formItemStore').value.trim() || 'Supermarket';
   const qty = Math.max(1, parseInt(document.getElementById('formItemQty').value, 10) || 1);
   const unit = document.getElementById('formItemUnit').value;
-  const price = Math.max(0, parseFloat(document.getElementById('formItemPrice').value) || 0);
-  const priceLastMonth = parseFloat(document.getElementById('formItemPriceLastMonth').value) || price;
+  const rawPriceStr = document.getElementById('formItemPrice').value.trim();
+  const rawPrice = parseFloat(rawPriceStr);
+  const rawLastPriceStr = document.getElementById('formItemPriceLastMonth').value.trim();
+  const rawLastPrice = rawLastPriceStr ? parseFloat(rawLastPriceStr) : rawPrice;
   const discountInput = document.getElementById('formItemDiscount').value.trim();
   const purchased = document.getElementById('formItemPurchased').value === 'true';
 
   if (!name) {
-    showToast('Nama produk wajib diisi', 'error');
+    showToast('⚠️ Validasi Gagal: Nama produk wajib diisi!', 'error');
     return;
   }
+
+  if (!rawPriceStr || isNaN(rawPrice) || rawPrice <= 0) {
+    showToast('❌ Validasi Gagal: Harga barang harus lebih dari 0 dan tidak boleh bernilai negatif (-Rp)!', 'error');
+    return;
+  }
+
+  if (rawLastPrice < 0) {
+    showToast('❌ Validasi Gagal: Harga bulan lalu tidak boleh bernilai negatif!', 'error');
+    return;
+  }
+
+  const price = rawPrice;
+  const priceLastMonth = rawLastPrice;
 
   if (editId) {
     const item = cartItems.find(i => i.id === editId);
@@ -1940,6 +2017,56 @@ function escapeHtml(text) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+// ==========================================================
+// 14B. DT2 AUTOMATED SCENARIO SIMULATORS (P12 ~ P15)
+// ==========================================================
+
+function runScenarioSimulation(scenarioNumber) {
+  if (scenarioNumber === 1) {
+    openAddItemModal();
+    document.getElementById('formItemName').value = 'Beras Rojolele';
+    document.getElementById('formItemCategory').value = 'Bahan Pokok';
+    document.getElementById('formItemUnit').value = 'karung/5kg';
+    document.getElementById('formItemQty').value = '1';
+    document.getElementById('formItemPrice').value = '74000';
+    document.getElementById('formItemPriceLastMonth').value = '68000';
+    updateModalLivePreview();
+    showToast('📝 Skenario 1: Form terisi "Beras Rojolele" Rp 74.000 (satuan karung/5kg)', 'info');
+  } else if (scenarioNumber === 2) {
+    switchNavTab('belanja');
+    const minyak = cartItems.find(i => i.name.toLowerCase().includes('minyak'));
+    if (minyak) {
+      minyak.qty = 3;
+      saveUserState();
+      renderItemsList();
+      updateBudgetSafetyCap();
+      showToast('⚡ Skenario 2: Minyak Goreng diubah ke Qty 3 -> Subtotal seketika Rp 129.000 tanpa delay!', 'success');
+    }
+  } else if (scenarioNumber === 3) {
+    switchNavTab('promo');
+    setCalcPreset(100000, '50% + 20%');
+    showToast('🧮 Skenario 3: Wajan Rp 100.000 promo 50% + 20% = Rp 40.000 (Bukan Rp 30.000)', 'success');
+  } else if (scenarioNumber === 4) {
+    switchNavTab('belanja');
+    showToast('📈 Skenario 4: Beras (+Rp 6.000 ↑ merah), Telur (-Rp 4.000 ↓ hijau), Garam (= stabil)', 'info');
+  } else if (scenarioNumber === 5) {
+    setQuickBudget(100000);
+    switchNavTab('belanja');
+    showToast('⚠️ Skenario 5: Batas dompet Rp 100.000 aktif untuk uji ambang waspada & overbudget', 'warning');
+  }
+}
+
+function resetToDT2Default() {
+  cartItems = JSON.parse(JSON.stringify(DEFAULT_SHOPPING_ITEMS));
+  budgetLimit = DEFAULT_BUDGET;
+  sessionStore = 'Lotte Mart Grocery - Puri Indah';
+  sessionDate = '2026-10-26';
+  saveUserState();
+  renderItemsList();
+  updateBudgetSafetyCap();
+  showToast('🔄 Keranjang belanja telah direset ke 6 barang standar DT2 Rian (Total Rp 291.000)', 'success');
 }
 
 // ==========================================================

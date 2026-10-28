@@ -91,7 +91,7 @@ function getBudgetStatus(totalSpent, budgetLimit = 350000) {
     return {
       status: 'DANGER_OVERBUDGET',
       pct,
-      alertText: 'BAHAYA OVERBUDGET: Total belanja melebihi batas uang tunai! Kurangi kuantitas atau tunda pembelian barang sekunder.'
+      alertText: 'BAHAYA OVERBUDGET: Total belanja melebihi batas saldo dompet! Kurangi kuantitas atau batalkan barang sekunder.'
     };
   } else if (pct === 100) {
     return {
@@ -101,15 +101,15 @@ function getBudgetStatus(totalSpent, budgetLimit = 350000) {
     };
   } else if (pct >= 80) {
     return {
-      status: 'WARNING_80',
+      status: 'WARNING_WASPADA',
       pct,
-      alertText: 'Peringatan Waspada (>= 80%): Total belanja sudah mencapai ambang 80% dari dompet.'
+      alertText: `Peringatan Waspada: Total belanja sudah mencapai ${pct.toFixed(1)}% dari batas saldo dompet.`
     };
   } else {
     return {
       status: 'SAFE',
       pct,
-      alertText: 'Dompet Aman: Anggaran terkendali. Sisa uang tunai mencukupi.'
+      alertText: 'Dompet Aman: Anggaran belanja terkendali. Sisa uang tunai mencukupi.'
     };
   }
 }
@@ -243,9 +243,9 @@ runTest('Skenario 4.1: Uji Total Belanja Rp 279.000 (< 80% -> SAFE / AMAN)', () 
   assert.ok(res.alertText.includes('Dompet Aman'), 'Pesan harus Dompet Aman');
 });
 
-runTest('Skenario 4.2: Uji Total Belanja Rp 280.000 (Tepat 80.0% -> WARNING_80 / WASPADA)', () => {
+runTest('Skenario 4.2: Uji Total Belanja Rp 280.000 (Tepat 80.0% -> WARNING_WASPADA / WASPADA)', () => {
   const res = getBudgetStatus(280000, BUDGET_CAP);
-  assert.strictEqual(res.status, 'WARNING_80', 'Status harus WARNING_80');
+  assert.strictEqual(res.status, 'WARNING_WASPADA', 'Status harus WARNING_WASPADA');
   assert.strictEqual(Math.round(res.pct), 80, 'Persentase harus tepat 80%');
   assert.ok(res.alertText.includes('Waspada'), 'Pesan harus Peringatan Waspada');
 });
@@ -262,7 +262,21 @@ runTest('Skenario 4.4: Uji Total Belanja Rp 351.000 (> 100% -> DANGER_OVERBUDGET
   assert.strictEqual(res.status, 'DANGER_OVERBUDGET', 'Status harus DANGER_OVERBUDGET');
   assert.ok(res.pct > 100, 'Persentase harus lebih dari 100%');
   assert.ok(res.alertText.includes('BAHAYA OVERBUDGET'), 'Pesan harus memuat BAHAYA OVERBUDGET');
-  assert.ok(res.alertText.includes('Kurangi kuantitas atau tunda pembelian barang sekunder'), 'Memuat arahan resmi P15');
+  assert.ok(res.alertText.includes('Total belanja melebihi batas saldo dompet! Kurangi kuantitas atau batalkan barang sekunder'), 'Memuat arahan resmi P15');
+});
+
+runTest('Skenario 4.5: Simulasi DT2 Guru di Lab — Batas Dompet Rp 100.000, Belanja Rp 95.000 (>= 90% -> Waspada Kuning)', () => {
+  const res = getBudgetStatus(95000, 100000);
+  assert.strictEqual(res.status, 'WARNING_WASPADA', 'Status harus WARNING_WASPADA');
+  assert.strictEqual(res.pct, 95, 'Persentase tepat 95%');
+  assert.ok(res.alertText.includes('Peringatan Waspada'), 'Pesan memuat Peringatan Waspada');
+});
+
+runTest('Skenario 4.6: Simulasi DT2 Guru di Lab — Batas Dompet Rp 100.000, Belanja Rp 110.000 (> 100% -> Bahaya Merah Tegas)', () => {
+  const res = getBudgetStatus(110000, 100000);
+  assert.strictEqual(res.status, 'DANGER_OVERBUDGET', 'Status harus DANGER_OVERBUDGET');
+  assert.strictEqual(res.pct, 110, 'Persentase tepat 110%');
+  assert.strictEqual(res.alertText, 'BAHAYA OVERBUDGET: Total belanja melebihi batas saldo dompet! Kurangi kuantitas atau batalkan barang sekunder.');
 });
 
 // ----------------------------------------------------------
