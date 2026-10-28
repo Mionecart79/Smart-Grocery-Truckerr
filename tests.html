@@ -278,9 +278,9 @@
         return { unitPriceFinal: price, discountNominalPerUnit: 0, effectivePercent: 0, label: '', steps: [] };
       }
 
-      const isDirectNominal = (/^rp\\s*[\\d\\.\\,]+/i.test(clean)) || (/^\\d+$/.test(clean.replace(/[\\.\\,]/g, '')) && !clean.includes('%'));
+      const isDirectNominal = (/^rp\s*[\d\.\,]+/i.test(clean)) || (/^\d+$/.test(clean.replace(/[\.\,]/g, '')) && !clean.includes('%'));
       if (isDirectNominal) {
-        const nominal = parseFloat(clean.replace(/[^\\d]/g, '')) || 0;
+        const nominal = parseFloat(clean.replace(/[^\d]/g, '')) || 0;
         const finalPrice = Math.max(0, price - nominal);
         const nominalDisc = price - finalPrice;
         const effPct = price > 0 ? (nominalDisc / price) * 100 : 0;
@@ -293,7 +293,7 @@
         };
       }
 
-      const parts = clean.split('+').map(p => parseFloat(p.replace(/[^\\d\\.]/g, ''))).filter(p => !isNaN(p) && p > 0);
+      const parts = clean.split('+').map(p => parseFloat(p.replace(/[^\d\.]/g, ''))).filter(p => !isNaN(p) && p > 0);
       if (parts.length === 0) {
         return { unitPriceFinal: price, discountNominalPerUnit: 0, effectivePercent: 0, label: '', steps: [] };
       }
@@ -574,3 +574,4 @@
   </script>
 </body>
 </html>
+

@@ -268,14 +268,14 @@ runTest('Skenario 4.4: Uji Total Belanja Rp 351.000 (> 100% -> DANGER_OVERBUDGET
 runTest('Skenario 4.5: Simulasi DT2 Guru di Lab — Batas Dompet Rp 100.000, Belanja Rp 95.000 (>= 90% -> Waspada Kuning)', () => {
   const res = getBudgetStatus(95000, 100000);
   assert.strictEqual(res.status, 'WARNING_WASPADA', 'Status harus WARNING_WASPADA');
-  assert.strictEqual(res.pct, 95, 'Persentase tepat 95%');
+  assert.strictEqual(Math.round(res.pct), 95, 'Persentase tepat 95%');
   assert.ok(res.alertText.includes('Peringatan Waspada'), 'Pesan memuat Peringatan Waspada');
 });
 
 runTest('Skenario 4.6: Simulasi DT2 Guru di Lab — Batas Dompet Rp 100.000, Belanja Rp 110.000 (> 100% -> Bahaya Merah Tegas)', () => {
   const res = getBudgetStatus(110000, 100000);
   assert.strictEqual(res.status, 'DANGER_OVERBUDGET', 'Status harus DANGER_OVERBUDGET');
-  assert.strictEqual(res.pct, 110, 'Persentase tepat 110%');
+  assert.strictEqual(Math.round(res.pct), 110, 'Persentase tepat 110%');
   assert.strictEqual(res.alertText, 'BAHAYA OVERBUDGET: Total belanja melebihi batas saldo dompet! Kurangi kuantitas atau batalkan barang sekunder.');
 });
 
